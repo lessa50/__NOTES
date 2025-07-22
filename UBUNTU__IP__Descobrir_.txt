@@ -1,0 +1,28 @@
+------------------------------ IP 
+        ip a 
+ou 
+        hotsname -I 
+ou
+        ifconfig
+
+------------------------------ IFCONFIG 
+
+        sudo apt install net-tools
+
+        ifconfig 
+
+------------------------------ IP publico
+
+        curl ifconfig.me 
+ou
+        curl icanhazip.com 
+------------------------------ ROTAS
+        route -n
+
+------------------------------------ DNS
+        nmcli dev show | grep DNS
+ou
+        systemd-resolve --status
+
+------------------------------------ INFO REDE
+        nmcli device show

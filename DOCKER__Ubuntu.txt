@@ -1,0 +1,35 @@
+
+/////////////  ATUALIZAR
+sudo apt update && sudo apt upgrade
+
+/////////////  PACOTES
+sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
+
+
+/////////////  DOCKER REPOSITORIO - CHAVE
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+
+/////////////  DOCKER REPOSITORIO
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+
+/////////////  DOCKER ENGINE
+sudo apt update
+sudo apt install -y docker-ce docker-ce-cli containerd.io
+
+
+//O WSL2 não suporta systemd por padrão, então você precisa iniciar o daemon do Docker manualmente ou usar uma alternativa como dockerd
+
+/////////////  INICIAR MANUALMENTE
+sudo dockerd &
+
+
+
+
+/////////////  DOCKER USER
+sudo usermod -aG docker $USER
+
+
+/////////////  DOCKER TESTE
+docker run hello-world
+

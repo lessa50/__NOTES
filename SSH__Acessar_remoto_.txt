@@ -1,0 +1,8 @@
+----------- SSH remoto
+    ssh username@ip_do_servidor
+
+----- exemplo:
+    ssh lessa@192.168.1.27
+
+    
+

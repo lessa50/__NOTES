@@ -1,0 +1,233 @@
+________________________________________________________
+
+TUTORIAL DEEPSEEK
+________________________________________________________
+////////////////////////// vi / vim  shortcut e teclas
+
+SETAS       -> use setas para se movimentar - modo navegacao
+i           -> use a letra i para inserir um texto - modo inserção : i
+esc         -> use a tecla esc para sair do modo inserção : i
+:w          -> use dois pontos e w para salvar
+:w nome.txt -> use dois pontos e w para salvar
+:q          -> use dois pontos e q para sair (e voltar ao terminal)
+:q!         -> use dois pontos e q! (q + exclamacao) para sair SEM SALVAR
+:wq         -> use dois pontos e wq para salvar e sair (voltar terminal)
+ZZ          -> use ZZ maiusculos para salvar e sair (voltar terminal)
+
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+lembre-se sempre de dar esc antes de :w e :q pois no modo de
+inserçao (i) vc nao consegue salvar e nem sair 
+a sequencia que eu uso sempre:
+------------------------------
+esc :w  -> para salvar 
+esc :q  -> para sair
+esc :q! -> para sair sem salvar
+esc :wq -> para salvar e sair
+esc ZZ -> para salvar e sair
+------------------------------
+
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+
+////////////////////////// vi / vim   mais teclas 
+b   -> BEGIN - vai pro inicio da palavra
+e   -> END   - vai pro fim da palavra
+i   -> insere na posicao atual      - antes
+a   -> insere na posicao seguinte   - depois
+x   -> apaga o caracter atual (no modo de navegacao, ou seja, esc)
+11x -> apaga 11 caracteres a frente 
+----------------------------------------------------
+exemplo: 
+        Se eu quero apagar a palavra Wikipedia, 
+        eu simplesmente posiciono o cursor no W 
+        e aperto 9x (porque a palavra tem 9 letras)
+----------------------------------------------------
+dd  -> apagar a linha inteira
+u   -> desfaz a última alteração (undo)
+----------------------------------------------------
+Ctrl + r    - Refaz uma alteração desfeita (redo)
+:earlier 5m - Volta o arquivo ao estado de 5 minutos atrás
+:later 5m   - Avança o arquivo ao estado após 5 minutos (se tiver desfeito)
+----------------------------------------------------
+
+||||||||||||||||||||||||||||||||||||||||||||||||||||
+Movimento do cursor (Modo Normal):
+h        - esquerda
+j        - baixo
+k        - cima
+l        - direita
+w        - próxima palavra
+b        - palavra anterior
+0        - início da linha
+$        - fim da linha
+gg       - início do arquivo
+1G       - início do arquivo
+3G       - vai pra linha 3
+12G      - vai pra linha 12
+G        - fim do arquivo
+50G      - vai para a linha 50
+Ctrl + f - página para frente
+Ctrl + b - página para trás
+||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+||||||||||||||||||||||||||||||||||||||||||||||||||||
+Entrando no Modo Inserção:
+i - insere antes do cursor
+a - insere depois do cursor
+I - insere no início da linha
+A - insere no fim da linha
+o - abre nova linha abaixo
+O - abre nova linha acima
+||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+||||||||||||||||||||||||||||||||||||||||||||||||||||
+Deletando texto:
+x   - deleta caractere sob o cursor
+dw  - deleta palavra
+dd  - deleta linha inteira
+5dd - deleta 5 linhas
+d$  - deleta até o fim da linha
+||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+||||||||||||||||||||||||||||||||||||||||||||||||||||
+Copiando e colando:
+yy  - copia linha (yank)
+5yy - copia 5 linhas
+p   - cola após o cursor
+P   - cola antes do cursor
+||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+||||||||||||||||||||||||||||||||||||||||||||||||||||
+Divisão de janelas:
+:sp              - divide horizontalmente
+:vsp             - divide verticalmente
+Ctrl + w + setas - navega entre janelas
+:q               - fecha janela atual
+||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+||||||||||||||||||||||||||||||||||||||||||||||||||||
+Abas:
+:tabnew     - nova aba
+gt          - próxima aba
+gT          - aba anterior
+||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+||||||||||||||||||||||||||||||||||||||||||||||||||||
+Modo Visual - SELECIONAR PALAVRAS OU LINHAS 
+-------------------------------------------
+v - entra no modo visual (seleção por caractere)
+V - modo visual por linhas
+Ctrl + v - modo visual em bloco
+-------------------------------------------
+Depois de selecionar, use comandos como:
+-------------------------------------------
+y - copiar
+d - deletar
+c - alterar
+||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+PESQUISA BASICA
+----------------
+
+----------------------------------------------
+Pesquisar para frente (para baixo no arquivo):
+----------------------------------------------
+Pressione / (barra)
+Digite o termo de busca (ex: /palavra)
+Pressione Enter
+Use n para ir para a próxima ocorrência
+Use N (Shift+n) para ir para a ocorrência anterior
+
+----------------------------------------------
+Pesquisar para trás (para cima no arquivo):
+----------------------------------------------
+Pressione ? (interrogação)
+Digite o termo de busca (ex: ?palavra)
+Pressione Enter
+Use n para ir para a próxima ocorrência (agora será para cima)
+Use N para ir para a ocorrência anterior (agora será para baixo)
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+PESQUISA AVANÇADA
+------------------
+-----------------------------------
+Pesquisar a palavra sob o cursor:
+-----------------------------------
+* - Busca a palavra atual para frente
+# - Busca a palavra atual para trás
+
+-----------------------------------
+Opções úteis:
+-----------------------------------
+:set ignorecase - Ignora maiúsculas/minúsculas (ic)
+:set smartcase - Só ignora case se a busca for toda em minúsculas
+:set hlsearch - Destaca resultados da busca (hls)
+:nohlsearch - Desliga o destaque temporariamente (:noh)
+
+-----------------------------------
+Caracteres especiais em buscas:
+-----------------------------------
+^ - Início de linha (ex: /^Início)
+$ - Fim de linha (ex: /fim$)
+. - Qualquer caractere (ex: /c.ra encontra "cara", "cora", etc.)
+\ - Escapa caracteres especiais (ex: /arquivo\.txt)
+
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+SUBSTITUICAO
+------------
+
+-----------------------------------------
+Formato básico:
+-----------------------------------------
+:[range]s/pattern/replacement/[flags]
+-----------------------------------------
+
+Exemplos:
+----------------------------------------------------------------------
+:%s/velho/novo/g - Substitui "velho" por "novo" em todo arquivo
+:10,20s/erro/acerto/g - Substitui entre as linhas 10 e 20
+:%s/linha//gn - Conta quantas vezes "linha" aparece (não substitui)
+:%s/\<o\>/a/g - Substitui apenas palavras inteiras "o" por "a"
+----------------------------------------------------------------------
+
+Flags importantes:
+----------------------------------------------------------------------
+g - Global (todas ocorrências na linha)
+c - Confirma cada substituição
+i - Ignora case
+n - Apenas conta ocorrências
+----------------------------------------------------------------------
+
+Dicas de Produtividade
+----------------------------------------------------------------------
+Para limpar o destaque da busca: :noh
+Para ver histórico de buscas: pressione / e use setas para cima/baixo
+Para pesquisar caracteres especiais use \ (ex: /\/\/ busca "//")
+Use q/ para abrir a janela de histórico de buscas
+:g/padrão - Mostra todas linhas que contêm o padrão
+----------------------------------------------------------------------
+
+Exemplo Prático
+----------------------------------------------------------------------
+Abra um arquivo no VIM
+Pesquise por uma palavra: /exemplo + Enter
+Navegue entre ocorrências com n e N
+Substitua todas ocorrências: :%s/exemplo/ilustração/g
+Para uma substituição segura com confirmação: :%s/exemplo/ilustração/gc
+----------------------------------------------------------------------
+Lembre-se que todas as buscas funcionam tanto no modo de comando (com :) quanto no modo normal (sem :).
+----------------------------------------------------------------------
+
+
+
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+///////////////////////////////////  FIM DA AULA
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

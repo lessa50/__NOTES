@@ -1,0 +1,12 @@
+
+------------------------------ STATUS 
+    sudo systemctl status ssh
+
+------------------------------ INICIAR
+    sudo systemctl start ssh
+
+--------------------------- INICIAR AUTOMATICO
+    sudo systemctl enable ssh
+
+------------------------------ RESTARTAR
+    sudo systemctl restart ssh

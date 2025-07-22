@@ -1,0 +1,22 @@
+menu Preferences:
+--------------------------------
+Preferences > 
+Browse Packages > 
+User > 
+
+Default.sublime-theme
+
+
+[
+  {
+    "class": "sidebar_label",
+    //"color": [0, 0, 0],
+    "font.bold": false,
+    "font.size": 12
+  }
+]
+
+
+
+LINK VIDEOAULA:
+https://www.youtube.com/watch?v=BR7IFgTv69g

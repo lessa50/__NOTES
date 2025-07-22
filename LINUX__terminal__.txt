@@ -1,0 +1,102 @@
+
+------------------------------- ATUALIZAR
+    sudo apt update && sudo apt upgrade -y
+
+------------------------------- DEPENDENCIAS
+    sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
+
+------------------------------- CHAVE GPG
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+
+------------------------------- REPO
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+------------------------------- ENGINE
+    sudo apt update && sudo apt install -y docker-ce docker-ce-cli containerd.io
+
+------------------------------- VERIFICANDO
+    sudo systemctl status docker
+
+------------------------------- SEU USUARIO
+    sudo usermod -aG docker $USER
+
+    Reinicie a sessão do terminal ou faça logout/login para aplicar.
+
+
+------------------------------- DOCKER COMPOSE
+    sudo curl -L "https://github.com/docker/compose/releases/download/v2.23.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+
+------------------------------- PREMISSOES
+    sudo chmod +x /usr/local/bin/docker-compose
+
+
+----------------------------- VERIFICA INSTALL
+    docker-compose --version
+
+-------------------------- TESTE - HELLO WORLD
+    docker run hello-world
+
+-------------------------- LISTAR CONTAINERS
+    docker ps
+
+
+
+
+
+Comandos Úteis para Gerenciamento:
+----------------------------------------------------------
+Comando	                        Descrição
+sudo systemctl start docker	    Inicia o serviço Docker
+sudo systemctl stop docker	    Para o serviço Docker
+sudo systemctl restart docker   Reinicia o Docker
+docker --version	            Verifica a versão do Docker
+docker images	                Lista imagens baixadas
+docker rmi <imagem>	            Remove uma imagem
+
+
+
+
+Solução de Problemas Comuns
+----------------------------------------------------------
+(A) Erro de permissão ("Got permission denied")
+Se mesmo após adicionar ao grupo docker ainda pedir sudo:
+----------------------------------------------------------
+bash
+----
+newgrp docker  # Atualiza os grupos da sessão atual
+
+----------------------------------------------------------
+(B) Limpar recursos não utilizados
+----------------------------------------------------------
+bash
+-----
+docker system prune -a
+
+----------------------------------------------------------
+(C) Desinstalar Docker completamente
+----------------------------------------------------------
+bash
+----
+sudo apt purge docker-ce docker-ce-cli containerd.io
+sudo rm -rf /var/lib/docker
+sudo rm -rf /var/lib/containerd
+
+
+
+----------------------------------------------------------
+Aprenda a criar seu primeiro Dockerfile:
+----------------------------------------------------------
+dockerfile
+-----------
+FROM ubuntu:22.04
+RUN apt update && apt install -y python3
+CMD ["python3", "--version"]
+
+
+----------------------------------------------------------
+Explore docker-compose.yml para orquestrar múltiplos containers.
+----------------------------------------------------------
+
+
+
