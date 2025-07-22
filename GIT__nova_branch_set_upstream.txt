@@ -1,0 +1,17 @@
+
+
+NOVA BRANCH
+///////////
+
+criando nova branch localmente
+-------------------------------------------
+    git checkout -b lessa 
+
+
+
+PUSH 
+/////
+
+subindo essa branch para o github
+-------------------------------------------
+    git push --set-upstream origin lessa
