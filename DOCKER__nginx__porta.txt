@@ -1,0 +1,17 @@
+
+
+DOCKER NGINX
+/////////////////////////////// 
+docker run -d --name lessa_nginx -p 80:80 nginx
+
+                ---------------------------------------------
+                -d  significa detached (em background)
+                ---------------------------------------------
+                -p  significa portas 
+                                    - 80 (porta container)
+                                    - 80 (porta do host)
+                ---------------------------------------------
+
+
+/////////////////////////////// LOGS
+docker logs lessa_nginx 

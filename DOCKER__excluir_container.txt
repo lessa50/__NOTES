@@ -1,0 +1,23 @@
+/////////////////////////////// EXCLUIR 
+docker rm <id ou nome>
+
+
+antes de tentar excluir, pare-o
+/////////////////////////////// PARAR
+docker stop <id ou nome>
+
+                            ---------------------------------
+                            mais recomendado
+
+
+
+docker stop -t 0 <id ou nome>
+
+                            ---------------------------------
+                            flag -t 0
+                            ---------------------------------
+                            -t 0 significa parada imediata do contêiner, sem período de espera para encerramento gracioso.
+                            ---------------------------------
+                            A flag -t (ou --time) define o período de graça para que o contêiner pare de forma "suave" (enviando um sinal SIGTERM) antes de ser forçado a parar com um sinal SIGKILL. 
+                            Quando você define -t 0, você está instruindo o Docker a não esperar e forçar a parada imediata do contêiner meu_nginx com SIGKILL, sem dar tempo para o contêiner encerrar seus processos de forma controlada.
+

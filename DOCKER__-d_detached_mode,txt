@@ -1,0 +1,17 @@
+
+DETACHED MODE
+/////////////
+
+modo desacoplado, em background, em segundo plano
+-------------------------------------------------
+        docker run -d nginx
+
+                            ------------------------
+                            Nesse caso, o container Nginx será iniciado em segundo plano, e o terminal retorna imediatamente o ID do container, sem exibir os logs ou bloquear o terminal.
+
+                            --------------------------
+                            A flag -d (detached mode) faz com que o container seja executado em segundo plano (background).
+                            Sem essa flag, o container rodaria em modo interativo (foreground), e o terminal ficaria preso exibindo os logs do PostgreSQL, impedindo outros comandos até que o container fosse interrompido 
+
+
+

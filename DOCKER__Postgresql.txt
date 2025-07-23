@@ -3,8 +3,35 @@ POSTGRES DOCKER
 
 modelo
 --------------------------------------------------
-            docker run --name meu-postgres -e POSTGRES_PASSWORD=minhasenha -d postgres
+            docker run --name meu-postgres -p 5432:5432 -e POSTGRES_PASSWORD=minhasenha -v pasta_local:pasta_dados_postgres -d postgres
 
 exemplo:
 ----------------------------------------------------
-            docker run --name lessa_postgres -e POSTGRES_PASSWORD=qw -d postgres
+            docker run --name lessa_postgres -p 5432:5432  -e POSTGRES_PASSWORD=qw -v /home/lessa/Postgresql/v_lessa_postgres:/var/lib/postgres/data -d postgres
+
+
+                            -------------------------------
+                            A flag -e 
+                            -------------------------------
+                            (ou --env) define uma variável de ambiente dentro do container.
+
+                            -------------------------------
+                            A flag -d 
+                            -------------------------------
+                            (detached mode) faz com que o container seja executado em segundo plano (background).
+                            Sem essa flag, o container rodaria em modo interativo (foreground), e o terminal ficaria preso exibindo os logs do PostgreSQL, impedindo outros comandos até que o container fosse interrompido 
+
+                            -------------------------------
+                            A flag -v
+                            -------------------------------
+                            é usada para montar um volume, permitindo que dados sejam compartilhados ou persistidos entre o host (a máquina local) e o contêiner Docker.
+                            Parte esquerda (/home/lessa/Postgresql/v_lessa_postgres): Este é o diretório no host (sua máquina local) onde os dados serão armazenados. 
+                            Parte direita (/var/lib/postgres/data): Este é o diretório dentro do contêiner onde o PostgreSQL armazena seus dados (banco de dados, tabelas, etc.).
+                            Função: O -v mapeia o diretório do host para o diretório do contêiner, garantindo que os dados do PostgreSQL sejam persistidos no diretório /home/lessa/Postgresql/v_lessa_postgres no host. Isso significa que, mesmo que o contêiner seja removido, os dados do banco de dados permanecerão no host.
+
+
+
+
+
+
+
