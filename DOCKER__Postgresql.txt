@@ -1,6 +1,10 @@
-//////////////////////////// run postgres
---------- modelo
-docker run --name meu-postgres -e POSTGRES_PASSWORD=minhasenha -d postgres
+POSTGRES DOCKER
+////////////////
 
---------- exemplo
-docker run --name lessa_postgres -e POSTGRES_PASSWORD=qw -d postgres
+modelo
+--------------------------------------------------
+            docker run --name meu-postgres -e POSTGRES_PASSWORD=minhasenha -d postgres
+
+exemplo:
+----------------------------------------------------
+            docker run --name lessa_postgres -e POSTGRES_PASSWORD=qw -d postgres
