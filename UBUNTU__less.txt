@@ -1,0 +1,33 @@
+LESS
+/////
+
+-----------------------------------
+~$ less /etc/sysctl.conf
+
+q	- pra sair digite letra 'q'
+
+
+								----------------------------
+								less
+								----------------------------
+								O comando less no Ubuntu (e em outros sistemas baseados em Linux) é usado para visualizar o conteúdo de arquivos de texto de forma paginada, permitindo navegar pelo arquivo de maneira eficiente, especialmente em arquivos grandes. Diferente do comando cat, que exibe o conteúdo inteiro de uma vez, o less carrega o arquivo gradualmente, o que o torna mais leve e prático para leitura.
+								----------------------------
+								Navegação: 
+								----------------------------
+								Use as setas para cima/para baixo para mover linha por linha. 
+								----------------------------
+								Pressione Espaço para avançar uma página. Pressione b para voltar uma página. 
+								----------------------------
+								Use g para ir ao início do arquivo e G para o final. 
+								----------------------------
+								Para pesquisar, digite / seguido do termo (ex.: /palavra) e pressione Enter. 
+								----------------------------
+								Use n para próxima ocorrência e N para a anterior.
+								----------------------------
+								----------------------------
+								----------------------------
+								----------------------------
+								----------------------------
+								----------------------------
+
+

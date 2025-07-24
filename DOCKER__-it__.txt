@@ -1,0 +1,36 @@
+ITERATIVO
+/////////
+
+-----------------------------------------
+docker run -it ubuntu
+
+-----------------------------------------
+docker run -it node
+
+-----------------------------------------
+docker run -it nginx
+
+
+							-------------------------
+							flag -it
+							-------------------------
+							-i
+							-------------------------
+							(interativo): Mantém a entrada padrão (STDIN) aberta, permitindo que você interaja com o contêiner, mesmo que não esteja conectado a um terminal. Isso é útil para enviar comandos ou dados diretamente ao contêiner.
+							-------------------------
+							-t
+							-------------------------
+							 (terminal): Aloca um pseudo-terminal (TTY) para o contêiner, proporcionando uma interface de terminal interativa, como se você estivesse usando um shell dentro do contêiner.
+							-------------------------
+							docker run -it ubuntu  
+							-------------------------
+							Inicia um contêiner com a imagem ubuntu.  A flag -it faz com que o contêiner seja executado em modo interativo com um terminal. Geralmente, isso abre um shell (como /bin/bash) dentro do contêiner, permitindo que você execute comandos no ambiente Ubuntu.
+							-------------------------
+							docker run -it node  
+							-------------------------
+							Inicia um contêiner com a imagem node (que contém o ambiente Node.js). Com -it, você provavelmente será levado a um terminal interativo onde pode executar comandos do Node.js, como o REPL (Read-Eval-Print Loop) do Node, ou outros comandos no sistema.
+							-------------------------
+							docker run -it nginx  
+							-------------------------
+							Inicia um contêiner com a imagem nginx (servidor web).  Normalmente, o Nginx roda em segundo plano (como um daemon). Com -it, o contêiner é iniciado em modo interativo, mas, como o Nginx não é um shell, o comportamento pode variar. Você pode acabar acessando um terminal no sistema base da imagem (como /bin/sh), dependendo da configuração da imagem.
+							-------------------------

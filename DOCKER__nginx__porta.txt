@@ -2,16 +2,49 @@
 
 DOCKER NGINX
 /////////////////////////////// 
-docker run -d --name lessa_nginx -p 80:80 nginx
+docker run -d --name lessa_nginx_c -p 80:80 nginx
 
-                ---------------------------------------------
-                -d  significa detached (em background)
-                ---------------------------------------------
-                -p  significa portas 
-                                    - 80 (porta container)
+                ------------------------------------
+                -d  
+                        significa detached (em background)
+                ------------------------------------
+                -p  
+
+                significa portas:
+
+                        esquerda:
                                     - 80 (porta do host)
-                ---------------------------------------------
+
+                        direita:
+                                    - 80 (porta container)
+                ------------------------------------
+
+                ------------------------------------
+                -p HOST_PORT:CONTAINER_PORT
+                ------------------------------------
+
+                -p 80:80 significa:
+
+                ------------------------------------
+                    Primeiro 80 (HOST_PORT):
+                ------------------------------------
+
+                            Porta 80 na sua máquina host (seu WSL2/Windows)
+
+                            Esta é a porta padrão para tráfego HTTP
+
+                            Você acessará via http://localhost
+
+                ------------------------------------
+                    Segundo 80 (CONTAINER_PORT):
+                ------------------------------------
+
+                            Porta 80 dentro do container Nginx
+
+                            O Nginx por padrão escuta na porta 80
+                            
+                ------------------------------------
 
 
-/////////////////////////////// LOGS
-docker logs lessa_nginx 
+
+
