@@ -1,0 +1,364 @@
+
+----------------------
+REDIS - AULA DEEPSEEK
+----------------------
+
+
+Cliente (CLI):
+-----------------------------------------
+redis-cli -a qw
+
+
+
+Listando configuracoes:
+-----------------------------------------
+config get *				# todas *
+config get bind				# acesso rede
+config get port				# porta
+config get requirepass		# senha
+
+
+Definindo e obtendo valores:
+-----------------------------------------
+SET nome "João Silva"
+GET nome
+
+
+
+Definindo e obtendo valores:
+-----------------------------------------
+SET nome "João Silva"
+GET nome
+
+
+Ver todos key/values de um HASH:
+-----------------------------------------
+COMANDO HASH          : ID
+-----------------------------------------
+HGETALL sample-session:12345
+-----------------------------------------
+
+
+Ver somente keys de um HASH:
+-----------------------------------------
+HKEYS   sample-session:12345
+-----------------------------------------
+
+
+Ver somente values de um HASH:
+-----------------------------------------
+HVALS   sample-session:12345
+-----------------------------------------
+
+
+
+Ver CAMPO ESPECIFICO de um HASH:
+-----------------------------------------
+HGET   sample-session:12345 username
+-----------------------------------------
+HGET   sample-session:12345 last
+-----------------------------------------
+
+
+
+
+Ver MULTIPLOS CAMPOS de um HASH:
+-----------------------------------------
+HMGET   sample-session:12345 user_id email
+-----------------------------------------
+
+Atenção:  	o comando é HMGET  
+			(tem um M de MULTIPLE)
+
+-----------------------------------------
+
+
+CONTANDO CAMPOS:
+-----------------------------------------
+
+HLEN   sample-session:12345
+
+-----------------------------------------
+
+
+
+Ver todos key/values
+-----------------------------------------
+KEYS *                # asterisco (all)
+-----------------------------------------
+
+
+
+
+Setar uma CHAVE e VALOR
+-----------------------------------------
+SET Carro  Lamborguini
+SET Modelo Aventador
+SET Ano 2022
+SET Serie SVJ
+SET Potencia 770cv
+SET Motor V12 6.5l
+SET Aceleracao 0-100/2.8s
+-----------------------------------------
+
+
+Setar varias CHAVEs e VALORes ao mesmo tempo:
+---------------------------------------------
+MSET fruta1 Banana fruta2 Morango fruta3 Uva
+---------------------------------------------
+
+
+
+Mostrar varios :
+---------------------------------------------
+MGET fruta1 fruta2 fruta3
+---------------------------------------------
+
+
+
+Verificando existência de chaves:
+-----------------------------------------
+EXISTS nome
+-----------------------------------------
+
+
+
+Deletando chaves:
+-----------------------------------------
+DEL nome
+-----------------------------------------
+
+
+
+Estruturas de Dados - 1. Strings:
+-----------------------------------------
+SET contador 100
+INCR contador         # 101
+DECR contador         # 100
+INCRBY contador 50    # 150
+GET contador
+-----------------------------------------
+
+
+
+Estruturas de Dados - 2. Hashes (Dict):
+-----------------------------------------
+HSET usuario:1000 nome "João" idade 30 email "joao@exemplo.com"
+HGET usuario:1000 nome
+HGETALL usuario:1000
+HINCRBY usuario:1000 idade 1  # Incrementa idade
+-----------------------------------------
+
+
+
+
+Estruturas de Dados - 3. Listas:
+-----------------------------------------
+LPUSH tarefas "comprar leite"
+LPUSH tarefas "pagar contas"
+RPUSH tarefas "estudar Redis"
+LRANGE tarefas 0 -1  # Lista todos os itens
+LPOP tarefas        # Remove e retorna o primeiro item
+-----------------------------------------
+
+
+
+
+Estruturas de Dados - 4. Conjuntos (Sets):
+-----------------------------------------
+SADD tags "redis" "nosql" "banco-de-dados"
+SMEMBERS tags
+SADD tags "cache"
+SREM tags "nosql"
+SISMEMBER tags "redis"  # Verifica se existe
+-----------------------------------------
+
+
+
+
+Estruturas de Dados - 5. Conjuntos Ordenados 
+							  (Sorted Sets):
+-----------------------------------------
+ZADD ranking 100 "João" 85 "Maria" 95 "Carlos"
+ZRANGE ranking 0 -1  # Lista por ordem de score
+ZREVRANGE ranking 0 -1 WITHSCORES  # Lista em ordem decrescente com scores
+-----------------------------------------
+
+
+
+
+
+Persistência de Dados:
+Redis oferece várias opções de persistência:
+-----------------------------------------
+RDB (Redis Database File): Snapshots periódicos do dataset
+-----------------------------------------
+AOF (Append Only File): Registra todas as operações de escrita
+-----------------------------------------
+Sem persistência: Apenas em memória
+-----------------------------------------
+RDB + AOF: Combinação de ambos
+-----------------------------------------
+
+
+
+
+Configuracao:
+-----------------------------------------
+sudo vim /etc/redis/redis.conf
+-----------------------------------------
+Configurando persistência (redis.conf):
+-----------------------------------------
+# RDB
+save 900 1
+save 300 10
+save 60 10000
+
+# AOF
+appendonly yes
+appendfsync everysec
+-----------------------------------------
+
+
+
+Transações:
+-----------------------------------------
+Redis suporta transações com 
+os comandos MULTI/EXEC:
+-----------------------------------------
+MULTI
+INCR contador1
+INCR contador2
+EXEC  			# Executa todas as 
+				  operações atomicamente
+-----------------------------------------
+
+
+
+Pub/Sub (Publicação/Assinatura):
+-----------------------------------------
+	Sistema de mensagens assíncrono:
+	-----------------------------------------
+	# Terminal 1 (subscriber):
+	SUBSCRIBE noticias
+
+	# Terminal 2 (publisher):
+	PUBLISH noticias "Novo lançamento do Redis 6.0!"
+-----------------------------------------
+
+
+
+REDIS + PY :
+-----------------------------------------
+	import redis
+
+	r = redis.Redis(host='localhost', port=6379, db=0, password='suaSenhaSegura')
+
+	# Strings
+	r.set('foo', 'bar')
+	print(r.get('foo'))
+
+	# Hashes
+	r.hset('user:1000', 'name', 'João')
+	print(r.hgetall('user:1000'))
+-----------------------------------------
+
+
+
+
+
+
+REDIS + NODE :
+-----------------------------------------
+	const redis = require('redis');
+	const client = redis.createClient({
+	  host: 'localhost',
+	  port: 6379,
+	  password: 'suaSenhaSegura'
+	});
+
+	client.set('key', 'value', redis.print);
+	client.get('key', (err, reply) => {
+	  console.log(reply);
+	});
+-----------------------------------------
+
+
+
+
+
+
+Gerenciamento e Monitoramento
+Comandos úteis::
+-----------------------------------------
+INFO  # Mostra inform detalhadas do servidor
+INFO memory  # Informações sobre uso de memória
+INFO clients  # Inf. sobre clientes conectados
+CLIENT LIST  # Lista todos clientes conectados
+MONITOR  # Monitora todos comandos tempo real
+SLOWLOG GET  # Mostra comandos lentos
+-----------------------------------------
+
+
+Ferramentas de monitoramento:
+-----------------------------------------
+	Redis Insight (GUI oficial)
+	-----------------------------------------
+	redis-stat
+	-----------------------------------------
+	redislive
+	-----------------------------------------
+	Prometheus + Redis exporter
+	-----------------------------------------
+
+
+
+---------------------------------------------
+Cluster Redis
+---------------------------------------------
+	Para escalar horizontalmente, você pode configurar um cluster Redis:
+	-----------------------------------------
+
+	Replicação: Um master com vários slaves para leitura
+
+	Sharding: Particionamento de dados entre múltiplos nós
+	-----------------------------------------
+
+	Configurando replicação:
+	-----------------------------------------
+	No redis.conf do slave:
+	-----------------------------------------
+	replicaof <masterip> <masterport>
+	masterauth <master-password>
+	-----------------------------------------
+
+
+
+---------------------------------------------
+Boas Práticas
+---------------------------------------------
+	Definir um limite de memória (maxmemory)
+	-----------------------------------------
+	Escolher uma política de evição adequada (maxmemory-policy)
+	-----------------------------------------
+	Usar nomes descritivos para chaves (ex: "user:1000:profile")
+	-----------------------------------------
+	Definir TTL para dados temporários
+	-----------------------------------------
+	Evitar chaves muito grandes
+	-----------------------------------------
+	Usar pipelines para múltiplos comandos
+	-----------------------------------------
+	Monitorar performance regularmente
+	-----------------------------------------
+
+
+
+-----------------------------------------
+
+Conclusão
+
+Redis é uma ferramenta poderosa para cenários que exigem alta performance e baixa latência. Com seu suporte a diversas estruturas de dados e funcionalidades como pub/sub e transações, ele pode ser usado para muito mais do que apenas caching.
+
+
+-----------------------------------------

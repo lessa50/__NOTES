@@ -1,0 +1,139 @@
+
+----------------
+REDIS LINUX
+----------------
+
+
+Install:
+-----------------------------------------
+sudo apt update && sudo apt upgrade -y
+sudo apt install redis-server -y
+
+
+Status:
+-----------------------------------------
+sudo systemctl status redis
+
+
+Enable:
+-----------------------------------------
+sudo systemctl enable redis
+
+
+Versao:
+-----------------------------------------
+redis-server --version
+
+
+Cliente (CLI):
+-----------------------------------------
+redis-cli
+
+
+Configuracao:
+-----------------------------------------
+sudo vim /etc/redis/redis.conf
+
+
+Senha:
+-----------------------------------------
+sudo vim /etc/redis/redis.conf
+requirepass sua_senha_aqui
+
+
+Acesso remoto:
+-----------------------------------------
+sudo vim /etc/redis/redis.conf
+
+				-------------------------
+				Comente:
+				bind 127.0.0.1
+				-------------------------
+				Altere para:
+				bind 0.0.0.0
+				-------------------------
+				Adicione senha:
+				requirepass sua_senha_aqui
+				-------------------------
+
+
+Restart:
+-----------------------------------------
+sudo systemctl restart redis
+
+
+Status:
+-----------------------------------------
+sudo systemctl status redis
+
+
+Firewall:
+-----------------------------------------
+sudo ufw allow 6379/tcp
+sudo ufw status
+
+
+Porta:
+-----------------------------------------
+6379
+
+
+Teste:
+-----------------------------------------
+Test-NetConnection -ComputerName 192.168.1.30 -Port 6379
+
+
+Erro - modo protegido:
+-----------------------------------------
+Ao tentar adicionar uma conexao
+no REDISINSIGHT uma tela vermelha apareceu
+
+
+
+Configuracao:
+-----------------------------------------
+sudo vim /etc/redis/redis.conf
+
+-------------------------
+				Encontre:
+				bind 0.0.0.0
+				-------------------------
+				Adicione abaixo:
+				protected-mode no
+				-------------------------
+				Resultado:
+				bind 0.0.0.0
+				protected-mode no
+				-------------------------
+				Adicione uma senha:
+				requirepass sua_senha_segura
+				-------------------------
+
+
+ENTRAR TERMINAL - COM SENHA:
+-----------------------------------------
+sudo redis-cli
+-----------------------------------------
+Entrou, mas pede autenticacao:
+-----------------------------------------
+quando aparecer:
+127.0.0.1:6379> 
+-----------------------------------------
+digite: 
+AUTH qw                  # senha setada
+-----------------------------------------
+vai ficar assim:
+127.0.0.1:6379> AUTH qw
+-----------------------------------------
+Faça o ping:
+127.0.0.1:6379> PING
+PONG
+-----------------------------------------
+MANEIRA PRATICA - POREM NAO SEGURA:
+-----------------------------------------
+redis-cli -a qw
+-----------------------------------------
+
+
+
+

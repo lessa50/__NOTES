@@ -1,0 +1,10 @@
+LINK:
+https://www.youtube.com/playlist?list=PLucm8g_ezqNoAkYKXN_zWupyH6hQCAwxY
+
+----------------------
+POSTGRES - BOSON
+----------------------
+
+
+Listando configuracoes:
+-----------------------------------------

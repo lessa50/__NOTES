@@ -1,0 +1,149 @@
+
+----------------
+REDIS DOCKER
+----------------
+
+
+IMAGEM:
+--------------------------------- ultima
+docker pull redis:latest
+--------------------------------- mais leve
+docker pull redis:7.2-alpine  
+-----------------------------------------
+
+
+CONTAINER SEGURO:
+-----------------------------------------
+docker run -d \
+  --name redis-container \
+  -p 127.0.0.1:6379:6379 \ 
+  -v redis_data:/data \      
+  -e REDIS_PASSWORD=Su@Senh@Segura123 \  
+  --restart unless-stopped \
+  --memory 512m \            
+  --cpus 1 \                 
+  redis:latest \
+  redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}
+-----------------------------------------
+
+Explicando:
+-----------------------------------------
+-p 127.0.0.1:6379:6379 - Expõe apenas para localhost (altere para -p 6379:6379 se precisar de acesso externo)
+-e REDIS_PASSWORD - Define uma senha forte para autenticação
+--memory e --cpus - Limita recursos para evitar ataques de negação de serviço
+--appendonly yes - Habilita persistência dos dados
+-v redis_data - Volume nomeado para persistência dos dados
+-----------------------------------------
+
+
+EXEMPLO:
+Para acesso pelo windows
+usando Redis Insight:
+-----------------------------------------
+docker run -d \
+  --name redis-windows \
+  -p 6379:6379 \  
+  -v redis_win_data:/data \
+  -e REDIS_PASSWORD=qw \
+  --restart unless-stopped \
+  --memory 512m \
+  --cpus 1 \
+  redis:7.2-alpine \
+  redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}
+-----------------------------------------
+
+
+-----------------------------------------
+PARA MAIOR SEGURANÇA:
+-----------------------------------------
+Acesso externo seguro:
+Crie uma rede Docker dedicada:
+-----------------------------------------
+docker network create redis-net
+-----------------------------------------
+
+
+Execute o container na rede dedicada:
+-----------------------------------------
+docker run -d \
+  --name redis-container \
+  --network redis-net \
+  -p 192.168.1.100:6379:6379 \  # IP específico
+  # ... resto das configurações anteriores
+-----------------------------------------
+
+
+TROQUE PARA IP DA MAQUINA WINDOWS 
+QUE VAI ACESSAR:
+-----------------------------------------
+-p 192.168.1.100:6379:6379  
+-----------------------------------------
+
+
+Conectando Redis:
+-----------------------------------------
+docker exec -it redis-container redis-cli -a qw
+-----------------------------------------
+
+
+Teste:
+-----------------------------------------
+> PING  
+-----------------------------------------
+
+
+Verificando o Container:
+-----------------------------------------
+docker ps -f name=redis-container
+docker logs redis-container
+-----------------------------------------
+
+
+
+
+ENTRAR TERMINAL - COM SENHA:
+-----------------------------------------
+  sudo redis-cli
+-----------------------------------------
+Entrou, mas pede autenticacao:
+-----------------------------------------
+quando aparecer:
+  127.0.0.1:6379> 
+-----------------------------------------
+digite: 
+  AUTH qw                  # senha setada
+-----------------------------------------
+vai ficar assim:
+  127.0.0.1:6379> AUTH qw
+-----------------------------------------
+Faça o ping:
+  127.0.0.1:6379> PING
+  PONG
+-----------------------------------------
+MANEIRA PRATICA - POREM NAO SEGURA:
+-----------------------------------------
+redis-cli -a qw
+-----------------------------------------
+
+
+
+
+
+Melhor prática para produção:
+	-----------------------------------------
+	Use um arquivo docker-compose.yml para gerenciamento mais fácil
+	-----------------------------------------
+	Considere usar Redis com TLS
+	-----------------------------------------
+	Usar um túnel SSH
+	-----------------------------------------
+	Implemente regras de firewall adicionais
+	-----------------------------------------
+	Monitore o consumo de recursos
+	-----------------------------------------
+
+
+
+
+
+
