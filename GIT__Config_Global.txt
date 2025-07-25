@@ -1,0 +1,30 @@
+////////////////////////////////
+  CONFIG --GLOBAL
+////////////////////////////////
+
+Nome:
+---------------------------------
+git config --global user.name "__nome__"
+---------------------------------
+
+
+Email:
+---------------------------------
+git config --global user.email "__email__@gmail.com"
+---------------------------------
+
+
+Verificando NOME e EMAIL:
+---------------------------------
+git config user.name
+git config user.email
+
+
+Verificando EDITOR:
+---------------------------------
+git config core.editor
+
+
+VErificando TUDO:
+---------------------------------
+git config --list
