@@ -1,0 +1,30 @@
+criei esse aquivo fork-2-teste.txt
+
+
+
+
+adicionei mudancas e fiz commit 
+--------------------------------
+
+git add .
+git commit -m "fork-2-teste"
+
+
+
+
+fiz o push para o branch de mesmo nome
+---------------------------------------
+
+$git push origin adicionar-tutorial-fork
+
+
+
+IMPORTANTE
+-----------
+
+NAO FAÇA MERGE NOS OUTROS BRANCHS
+FAÇA O PUSH DIRETO PARA O BRANCH fork-2-teste REMOTO
+
+E DE LA FAÇA PULL REQUEST PARA O MANTENEDOR
+
+
