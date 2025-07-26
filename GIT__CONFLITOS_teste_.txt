@@ -4,3 +4,5 @@ RESOLVENDO CONFLITOS
 simulando um conflito
 ---------------------------
 
+/////////////
+ALTERACAO FEITA NO LESSA50
