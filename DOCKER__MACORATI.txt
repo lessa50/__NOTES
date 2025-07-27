@@ -1,0 +1,57 @@
+
+---------------------------
+DOCKER - MACORATI - AULA 1
+---------------------------
+sudo, helloworld, 
+
+
+CONTAINER:
+---------------------------------
+sudo docker ps           // ativos
+sudo docker ps -a        // todos
+---------------------------------
+sudo docker container ps 
+sudo docker container ps -a
+sudo docker container ls
+sudo docker container ls -a
+---------------------------------
+
+IMAGE:
+---------------------------------
+sudo docker images
+---------------------------------
+sudo docker image ls
+---------------------------------
+
+
+HELLO:
+---------------------------------
+sudo docker container run hello-world
+sudo docker run hello-world
+--------------------------------- 
+sudo docker run --name lessa_hello hello-world
+
+
+
+SUDO:
+---------------------------------
+Para nao precisar usar o sudo:
+---------------------------------
+sudo groupadd docker
+sudo gpasswd -a lessa docker
+sudo service docker restart
+newgrp Docker
+---------------------------------
+
+
+
+---------------------------
+DOCKER - MACORATI - AULA 2
+---------------------------
+
+
+
+:
+---------------------------------
+
+---------------------------------
