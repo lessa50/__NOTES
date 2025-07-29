@@ -521,3 +521,263 @@ COMANDOS SHELL
 ________________________________________
 
 
+
+
+
+
+SENHA:
+///////////////////////////////////////
+----------------------------------------
+ no psql=#
+----------------------------------------
+            \password
+----------------------------------------
+            digita senha
+            repete senha
+----------------------------------------
+
+
+CONFIGURACAO DE ACESSO:
+///////////////////////////////////////
+----------------------------------------
+ pg_hba.conf
+----------------------------------------
+----------------------------------------
+ no psql=#
+----------------------------------------
+pesquisar
+SHOW
+maiuscula:
+----------------------------------------
+            SHOW hba_file;               
+----------------------------------------
+editando
+powershell
+com aspas:
+----------------------------------------
+            notepad "C:\Program Files\PostgreSQL\14\data\pg_hba.conf"
+----------------------------------------
+METHOD (encriptacao):
+----------------------------------------
+1. SCRAM-SHA-256            5 ★★★★★    
+2. Clientcert               5 ★★★★★
+3. peer (Somente Unix)      4 ★★★★    //entra com usuario linux
+4. GSSAPI/Kerberos          4 ★★★★ 
+5. LDAP/RADIUS              3 ★★★ 
+6. md5 (Obsoleto)           2 ★★
+7. password (Texto claro)   1 ★
+8. trust (Perigosíssimo)    ZERO
+----------------------------------------
+Método	        Criptografia	Usar/Internet	Resistir/Ataques
+SCRAM-SHA-256	Forte	        Sim	            ★★★★★          
+Certificado	    Muito Forte	    Sim	            ★★★★★	       
+peer	        N/A	            Não	            ★★★★	         
+GSSAPI	        Forte	        Corporativo	    ★★★★	         
+LDAP	        Variável	    Depende	        ★★★	             
+md5	            Fraca	        Não	            ★★	             
+password	    Nenhuma	        Nunca	        ★	             
+trust	        Nenhuma	        Nunca	        Não	              
+----------------------------------------
+no docker:
+----------------------------------------
+            /var/lib/postgresql/data/pg_hba.conf
+----------------------------------------
+editando
+direto:
+----------------------------------------
+            sudo docker exec -it seu_container_postgres bash
+            cat /var/lib/postgresql/data/pg_hba.conf
+----------------------------------------
+editando
+volume:
+----------------------------------------
+            sudo vim ~/docker-volumes/postgresql/data/pg_hba.conf
+----------------------------------------
+no ubuntu:
+----------------------------------------
+            /etc/postgresql/[versão]/main/pg_hba.conf
+            /etc/postgresql/16/main/pg_hba.conf
+----------------------------------------
+encontrar
+o caminho:
+            sudo -u postgres psql -c "SHOW hba_file;"
+            sudo find /etc -name "pg_hba.conf"
+            ls /etc/postgresql/*/main/pg_hba.conf
+----------------------------------------
+            \password
+----------------------------------------
+            digita senha
+            repete senha
+----------------------------------------
+
+
+
+
+
+ACESSO - WINDOWS:
+///////////////////////////////////////
+----------------------------------------
+    psql -U postgres -d postgres -h localhost -p 5432
+----------------------------------------
+    ::::::::::::::::::::::::::::::::::::
+    Componentes do Comando:
+    ::::::::::::::::::::::::::::::::::::
+        psql:
+        --------------------------------
+                O cliente interativo de 
+                linha de comando do 
+                PostgreSQL. Permite 
+                executar comandos 
+                SQL e administrativos 
+                diretamente no banco
+        ::::::::::::::::::::::::::::::::
+        -U postgres:
+        --------------------------------
+                -U: 
+        --------------------------------
+                Flag que especifica 
+                o usuário (User)
+        --------------------------------
+                postgres: 
+        --------------------------------
+                Nome do usuário 
+                de superadministrador 
+                padrão do PostgreSQL
+        ::::::::::::::::::::::::::::::::
+        -d postgres:
+        --------------------------------
+                -d: 
+        --------------------------------
+                Flag que especifica 
+                o banco de dados
+                (Database)
+        --------------------------------
+                postgres: 
+        --------------------------------
+                Banco de dados 
+                padrão que existe em toda 
+                instalação PostgreSQL
+        ::::::::::::::::::::::::::::::::
+        -h localhost:
+        --------------------------------
+                -h: 
+        --------------------------------
+                Flag que especifica 
+                o host (máquina onde o 
+                PostgreSQL está rodando)
+        --------------------------------
+                localhost: 
+        --------------------------------
+                Indica que o 
+                servidor está na própria 
+                máquina (127.0.0.1)
+        ::::::::::::::::::::::::::::::::
+        -p 5432:
+        --------------------------------
+                -p: 
+                Flag que especifica 
+                a porta (Port)
+        --------------------------------
+                5432: 
+                Porta padrão onde 
+                o PostgreSQL escuta 
+                conexões
+        ::::::::::::::::::::::::::::::::
+
+
+
+ACESSO - DOCKER - LINUX:
+///////////////////////////////////////
+----------------------------------------
+Instalar 
+cliente:
+----------------------------------------
+            sudo apt update
+            sudo apt install postgresql-client    
+----------------------------------------
+            sudo -i -u postgres     
+----------------------------------------
+            sudo -U postgres     
+----------------------------------------
+Acesso:
+----------------------------------------
+        psql -U lessa -d postgres -h 192.168.1.30 -p 5432
+----------------------------------------
+
+
+
+ACESSO - LINUX:
+///////////////////////////////////////
+----------------------------------------
+Instalar 
+cliente:
+----------------------------------------
+            sudo apt update
+            sudo apt install postgresql-client    
+----------------------------------------
+            sudo -i -u postgres     
+----------------------------------------
+            sudo -U postgres     
+----------------------------------------
+Acesso:
+----------------------------------------
+    sudo -i -u postgres     
+----------------------------------------
+    ::::::::::::::::::::::::::::::::::::
+    Componentes do Comando:
+    ::::::::::::::::::::::::::::::::::::
+        sudo:
+        --------------------------------
+                Permite executar comandos 
+                como outro usuário 
+                (normalmente root)
+                Necessário porque usuários 
+                comuns não podem alternar 
+                para o usuário postgres 
+                diretamente
+        ::::::::::::::::::::::::::::::::
+        -i (login shell):
+        --------------------------------
+                Cria um ambiente de login 
+                interativo
+                Carrega o arquivo de perfil 
+                do usuário (~/.profile, 
+                ~/.bashrc, etc.)
+                Muda para o diretório home 
+                do usuário
+        ::::::::::::::::::::::::::::::::
+        -u postgres:
+        --------------------------------
+                Especifica o usuário para 
+                o qual queremos alternar 
+                (no caso, postgres)
+                O usuário postgres é 
+                criado automaticamente 
+                durante a instalação do 
+                PostgreSQL
+        ::::::::::::::::::::::::::::::::
+
+
+
+
+ACESSO - VERIFICACAO:
+///////////////////////////////////////
+----------------------------------------
+ no psql=#
+----------------------------------------
+usuario
+detalhes:
+----------------------------------------
+            \du                 
+----------------------------------------
+usuario
++ banco
++ host
++ via
++ porta:
+----------------------------------------
+            \conninfo       
+----------------------------------------
+
+
+
