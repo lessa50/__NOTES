@@ -1,0 +1,42 @@
+
+
+ONDE ESTA INSTALADO UM COMANDO ou PROGRAMA:
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+    which  postgres
+    which  redis-server
+    which  sshd
+
+----------------------------------------
+    
+    command -v  postgres
+    command -v  redis-server
+    command -v  sshd
+
+----------------------------------------
+    
+    dpkg -L  postgres
+    dpkg -L  redis-server
+    dpkg -L  sshd
+
+----------------------------------------
+________________________________________
+
+
+
+
+SE NAO SOUBER o NOME exato use:              
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    
+    dpkg -l | grep  postgre         
+    dpkg -l | grep  redis                       MUITO BOM
+    dpkg -l | grep  ssh    
+
+----------------------------------------
+    
+    apt list --installed | grep  postgre 
+    apt list --installed | grep  redis          MUITO BOM
+    apt list --installed | grep  ssh 
+
+----------------------------------------
+________________________________________
