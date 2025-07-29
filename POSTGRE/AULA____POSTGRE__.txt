@@ -1,0 +1,523 @@
+
+Termos do Postgres:
+----------------------------------------
+	::::::::::::::::::::::::::::::::::::
+	INDUSTRIA			POSTGRES
+	::::::::::::::::::::::::::::::::::::
+	Tabela				Relação
+	Linha				Tupla
+	Coluna				Atributo
+	Bloco de Dados		Pagina (Disco)
+	Pagina				Buffer (Memoria)
+	::::::::::::::::::::::::::::::::::::
+----------------------------------------
+
+----------------------------------------
+INSTALL:
+----------------------------------------
+    Instalar no Ubuntu:
+        ::::::::::::::::::::::::::::::::
+            sudo apt update
+            sudo apt install postgresql postgresql-contrib
+    Verificar:
+        ::::::::::::::::::::::::::::::::
+            sudo systemctl start postgresql
+            sudo systemctl stop postgresql
+            sudo systemctl status postgresql
+----------------------------------------
+
+----------------------------------------
+VERSAO:
+---------------------------------------
+        psql --version
+----------------------------------------
+
+
+----------------------------------------
+PROMPT:
+----------------------------------------
+    Entrar:
+        ::::::::::::::::::::::::::::::::
+            sudo -u postgres psql postgres
+    Sair:
+        ::::::::::::::::::::::::::::::::
+        \q             
+----------------------------------------
+
+
+
+
+
+----------------------------------------
+BASICO:
+----------------------------------------
+    \l              - Listar bancos 
+    \c nome_banco   - Conectar a banco
+    \dt             - Listar tabelas
+    \d nome_tabela  - Descrever tabela
+    \q              - Sair do psql
+    \?              - Ajuda comandos psql
+    \h              - Ajuda comandos SQL
+----------------------------------------
+
+
+
+----------------------------------------
+SENHA:
+----------------------------------------
+    Entrar:
+        ::::::::::::::::::::::::::::::::
+            sudo -u postgres psql postgres
+
+    Criar senha:
+        ::::::::::::::::::::::::::::::::
+            \password postgres 
+----------------------------------------
+
+
+
+
+----------------------------------------
+PACOTES:
+----------------------------------------
+    Entrar:
+        ::::::::::::::::::::::::::::::::
+            sudo -u postgres psql postgres
+    Pacotes:
+        ::::::::::::::::::::::::::::::::
+            CREATE EXTENSION adminpack;
+----------------------------------------
+
+
+
+
+
+
+----------------------------------------
+USUARIO:
+----------------------------------------
+    sudo -u postgres createuser -DAP lessa
+----------------------------------------
+Flags/opções:
+        ::::::::::::::::::::::::::::::::
+        -D ou --no-createdb:
+        --------------------------------
+                O usuário NÃO terá 
+                permissão para criar 
+                bancos de dados
+        ::::::::::::::::::::::::::::::::
+
+        ::::::::::::::::::::::::::::::::
+        -A ou --no-superuser:
+        --------------------------------
+                O usuário NÃO será 
+                um superusuário
+        Erro:
+                O erro ocorre porque em 
+                versões mais recentes do 
+                PostgreSQL (10+), algumas 
+                flags foram alteradas:
+
+                A opção -A foi removida
+                Em seu lugar, deve-se 
+                usar -S para especificar 
+                que o usuário não é 
+                superusuário
+        ::::::::::::::::::::::::::::::::
+
+        ::::::::::::::::::::::::::::::::
+        -P ou --pwprompt:
+        --------------------------------
+                Solicitará a senha do 
+                novo usuário 
+                interativamente
+::::::::::::::::::::::::::::::::
+Deletar usuario:
+----------------------------------------
+Entrar:
+        ::::::::::::::::::::::::::::::::
+            sudo -u postgres psql postgres
+Apagar usuario:
+        ::::::::::::::::::::::::::::::::
+            DROP USER lessa
+        ::::::::::::::::::::::::::::::::
+Apagar usuario MODERNO:
+        ::::::::::::::::::::::::::::::::
+            DROP ROLE lessa
+    ou
+            DROP USER IF EXISTS lessa
+    melhor:
+            DROP ROLE IF EXISTS lessa
+        ::::::::::::::::::::::::::::::::
+
+Deletar usuário  POSTGRESQL MODERNO:
+----------------------------------------
+1. Conectar ao PostgreSQL como administrador:
+----------------------------------------
+        sudo -u postgres psql postgres
+----------------------------------------
+
+----------------------------------------
+2. Verificar se o usuário existe (opcional):
+----------------------------------------
+        SELECT rolname FROM pg_roles WHERE rolname = 'lessa';
+----------------------------------------
+
+----------------------------------------
+3. Remover o usuário:
+----------------------------------------
+        DROP ROLE IF EXISTS lessa;
+----------------------------------------
+
+----------------------------------------
+4. Confirmar a remoção (opcional):
+----------------------------------------
+        SELECT rolname FROM pg_roles WHERE rolname = 'lessa';
+----------------------------------------
+
+
+
+
+----------------------------------------
+BANCO:
+::::::::::::::::::::::::::::::::::::::::
+Criar banco:
+----------------------------------------
+    sudo -u postgres createdb -O lessa dbTeste
+----------------------------------------
+Explicando comando:
+        ::::::::::::::::::::::::::::::::
+        createdb:
+        --------------------------------
+                Utilitário do PostgreSQL 
+                para criar novos bancos 
+                de dados
+                Alternativa ao 
+                comando SQL 
+                CREATE DATABASE
+        ::::::::::::::::::::::::::::::::
+        -O ou --owner:
+        --------------------------------
+                Define o proprietário 
+                (owner) 
+                do banco de dados
+                Neste caso, 
+                o usuário lessa será o 
+                proprietário do banco
+        ::::::::::::::::::::::::::::::::
+        dbTeste:
+        --------------------------------
+                Nome do novo banco de 
+                dados que será criado
+
+::::::::::::::::::::::::::::::::
+Deletar banco:
+----------------------------------------
+Entrar:
+        ::::::::::::::::::::::::::::::::
+            sudo -u postgres psql postgres
+Apagar banco:
+        ::::::::::::::::::::::::::::::::
+            DROP DATABASE dbLessa
+    
+----------------------------------------
+
+
+
+
+
+
+----------------------------------------
+ACESSO REMOTO:
+----------------------------------------
+TCP/IP ja vem bloqueada por padrao:
+
+----------------------------------------
+LIBERAR:
+----------------------------------------
+sudo vim /etc/postgresql/<versao>/main/postgresql.conf
+----------------------------------------
+sudo vim /etc/postgresql/16/main/postgresql.conf
+----------------------------------------
+PROCURAR:
+        /listen_addresses
+----------------------------------------
+ORIGINAL:
+        #listen_addresses = 'localhost'
+        #port = 5432
+DESCOMENTAR:
+        listen_addresses = '*'
+        port = 5432
+----------------------------------------
+SALVAR E SAIR:
+        :wq 
+----------------------------------------
+RESTARTAR POSTGRE:
+        sudo service postgresql restart 
+----------------------------------------
+ou
+----------------------------------------
+        sudo systemctl stop postgresql
+        sudo systemctl status postgresql
+
+        sudo systemctl start postgresql
+        sudo systemctl status postgresql
+----------------------------------------
+
+
+----------------------------------------
+ERRO:
+        --------------------------------
+        no pg_hba.conf entry for host "192.168.1.5", user "postgres", database "postgres", no encryption
+
+----------------------------------------
+EXPLICAÇÃO:
+        --------------------------------
+        Este erro ocorre quando há uma 
+        tentativa de conexão remota ao 
+        PostgreSQL que não está 
+        configurada corretamente no 
+        arquivo pg_hba.conf. O erro 
+        específico indica que não há 
+        uma entrada válida para o host 
+        192.168.1.5 tentando se conectar 
+        como usuário postgres ao 
+        banco postgres.
+----------------------------------------
+SOLUÇÃO:
+        --------------------------------
+        Primeiro, encontre o arquivo de 
+        configuração (o local varia 
+        conforme a instalação):
+        --------------------------------
+          sudo find / -name "pg_hba.conf" 2>/dev/null
+        --------------------------------
+EDITE COM VIM:
+--------------------------------
+  sudo vim /etc/postgresql/13/main/pg_hba.conf
+--------------------------------
+INCLUA AS LINHAS NO FINAL:
+--------------------------------
+# TYPE  DATABASE        USER            ADDRESS                 METHOD
+host    postgres        postgres        192.168.1.5/32          md5
+--------------------------------
+isso inclui o endereço da minha
+maquina windows que to tentando 
+acessar remotamente o banco 
+postgre na vm linux
+--------------------------------
+
+
+
+--------------------------------
+PHP PG ADMIN:
+--------------------------------
+Instalar:
+        ::::::::::::::::::::::::
+        sudo apt install phppgadmin
+        ::::::::::::::::::::::::
+--------------------------------
+pesquisar
+phppgadmin.conf
+        ::::::::::::::::::::::::
+        dpkg -l | grep phppgadmin
+        ------------------------
+        dpkg -L phppgadmin
+        ::::::::::::::::::::::::
+        sudo find / -iname "*phppgadmin*" 2>/dev/null
+        ------------------------
+        sudo find /etc /usr /var -iname "*phppgadmin*" 2>/dev/null
+        ::::::::::::::::::::::::
+--------------------------------
+editar:
+        ::::::::::::::::::::::::
+        sudo vim /etc/apache2/conf-available/phppgadmin.conf 
+        ::::::::::::::::::::::::
+        adicione a linha:
+        ------------------------
+                allow from all
+        ::::::::::::::::::::::::
+
+
+--------------------------------
+APACHE2
+--------------------------------
+editar:
+        ::::::::::::::::::::::::
+        sudo vim /etc/apache2/apache2.conf
+        ::::::::::::::::::::::::
+        incluir a linha
+        ------------------------
+        Include /etc/apache2/conf-available/phppgadmin.conf 
+        ::::::::::::::::::::::::
+Reiniciar:
+        ::::::::::::::::::::::::
+        sudo systemctl restart apache2 
+        sudo systemctl status apache2 
+        ::::::::::::::::::::::::
+
+
+
+----------------------------------------
+PHPPGADMIN:
+----------------------------------------
+    Instalar no Ubuntu:
+        ::::::::::::::::::::::::::::::::
+        sudo apt update
+        sudo apt install phppgadmin
+        ::::::::::::::::::::::::::::::::
+----------------------------------------
+APACHE:
+----------------------------------------
+PHPPGADMIN:
+----------------------------------------
+    Instalar no Ubuntu:
+        ::::::::::::::::::::::::::::::::
+        sudo apt install apache2 php libapache2-mod-php
+        sudo systemctl status apache2
+        ::::::::::::::::::::::::::::::::
+    Configurar :
+        ::::::::::::::::::::::::::::::::
+        sudo vim /etc/apache2/conf.d/phppgadmin
+    ou
+        sudo vim /etc/phppgadmin/config.inc.php
+        ::::::::::::::::::::::::::::::::
+        // Habilitar login para todos usuários
+        $conf['extra_login_security'] = false;
+        ::::::::::::::::::::::::::::::::
+        // Servidores PostgreSQL 
+        //(configuração padrão geralmente funciona)
+        $conf['servers'][0]['host'] = 'localhost';
+        $conf['servers'][0]['port'] = 5432;
+        $conf['servers'][0]['sslmode'] = 'prefer';
+        ::::::::::::::::::::::::::::::::
+
+
+PSQL no Windows 11
+//////////////////
+
+
+COMANDOS BASICOS:
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+versao:
+
+    psql --version
+----------------------------------------
+Ajuda:
+
+    psql --help
+----------------------------------------
+________________________________________
+
+\l                  -- Lista todos os bancos de dados
+\c nome_do_banco    -- Conecta a um banco específico
+\dt                 -- Lista tabelas do banco atual
+\q                  -- Sair do psql
+----------------------------------------
+________________________________________
+
+
+
+
+ENTRAR:
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+    psql -U seu_usuario -d nome_do_banco -h localhost -p 5432
+----------------------------------------
+
+    psql -U postgres -d postgres -h localhost -p 5432
+----------------------------------------
+________________________________________
+
+
+
+
+
+LIMPAR TELA :
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+    \! cls        # contrabarra + exclamacao + cls
+----------------------------------------
+________________________________________
+
+
+
+
+
+
+LISTAR BANCOS
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+    \l
+----------------------------------------
+________________________________________
+
+
+
+
+
+
+LISTAR TABELAS
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+    \dt
+----------------------------------------
+________________________________________
+
+
+
+
+
+
+LISTAR USUARIOS
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+    \du
+----------------------------------------
+________________________________________
+
+
+
+
+
+
+CONECTAR BANCO    ou    MUDAR DE BANDO
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+    \c postgres             //conectei
+    \c template1            //mudei
+    \c postgres             //voltei 
+----------------------------------------
+________________________________________
+
+
+
+
+
+
+VISUALIZAR TABELAS
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+    \d
+
+----------------------------------------
+VISUALIZAR TABELAS de SISTEMA
+
+    \dS
+----------------------------------------
+________________________________________
+
+
+
+
+
+
+COMANDOS SHELL
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+    \! date             
+    \! pwd
+----------------------------------------
+________________________________________
+
+
