@@ -8,10 +8,8 @@
 
 
 
-MYSQL - BOSON - Aula 07
-----------------------------------------
-////////   CRIANDO BANCO DE DADOS
-----------------------------------------
+CRIANDO BANCO DE DADOS
+///////////////////////////////////////
 
 
 criar banco :
@@ -19,11 +17,10 @@ criar banco :
                 CREATE DATABASE 
                 IF NOT EXISTS 
                 banco1;
-----------------------------------------
+
 
 
 apagar banco :
 ----------------------------------------
                 DROP DATABASE 
                 banco1;
-----------------------------------------
