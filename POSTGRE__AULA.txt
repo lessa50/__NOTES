@@ -72,6 +72,8 @@ SENHA:
     Criar senha:
         ::::::::::::::::::::::::::::::::
             \password postgres 
+        ::::::::::::::::::::::::::::::::
+        alter user postgres with password 'qw';  
 ----------------------------------------
 
 
@@ -423,11 +425,25 @@ ENTRAR:
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
     psql -U seu_usuario -d nome_do_banco -h localhost -p 5432
-----------------------------------------
+----------------------------
 
     psql -U postgres -d postgres -h localhost -p 5432
-----------------------------------------
-________________________________________
+----------------------------
+----------------------------
+NO DOCKER:
+----------------------------
+
+	sudo docker exec -it postgresql psql -U lessa -d postgres -h 192.168.1.30 -p 5432
+
+----------------------------
+NO UBUNTU
+----------------------------
+
+	sudo -u postgres psql
+
+
+////////////////////////////
+____________________________
 
 
 
@@ -532,6 +548,8 @@ SENHA:
 ----------------------------------------
             \password
 ----------------------------------------
+            alter user postgres with password 'qw';  
+----------------------------------------
             digita senha
             repete senha
 ----------------------------------------
@@ -569,14 +587,14 @@ METHOD (encriptacao):
 8. trust (Perigosíssimo)    ZERO
 ----------------------------------------
 Método	        Criptografia	Usar/Internet	Resistir/Ataques
-SCRAM-SHA-256	Forte	        Sim	            ★★★★★          
-Certificado	    Muito Forte	    Sim	            ★★★★★	       
-peer	        N/A	            Não	            ★★★★	         
-GSSAPI	        Forte	        Corporativo	    ★★★★	         
-LDAP	        Variável	    Depende	        ★★★	             
-md5	            Fraca	        Não	            ★★	             
-password	    Nenhuma	        Nunca	        ★	             
-trust	        Nenhuma	        Nunca	        Não	              
+SCRAM-SHA-256	Forte	        Sim	         ★★★★★          
+Certificado	Muito Forte	Sim	         ★★★★★	       
+peer	        N/A	        Não	         ★★★★	         
+GSSAPI	        Forte	        Corporativo	 ★★★★	         
+LDAP	        Variável	Depende	         ★★★	             
+md5	        Fraca	        Não	         ★★	             
+password	Nenhuma	        Nunca	         ★	             
+trust	        Nenhuma	        Nunca	         Não	              
 ----------------------------------------
 no docker:
 ----------------------------------------
@@ -606,6 +624,8 @@ o caminho:
 ----------------------------------------
             \password
 ----------------------------------------
+            alter user postgres with password 'qw';  
+----------------------------------------
             digita senha
             repete senha
 ----------------------------------------
@@ -616,6 +636,8 @@ o caminho:
 
 ACESSO - WINDOWS:
 ///////////////////////////////////////
+----------------------------------------
+    psql -U postgres
 ----------------------------------------
     psql -U postgres -d postgres -h localhost -p 5432
 ----------------------------------------
@@ -699,9 +721,19 @@ cliente:
 ----------------------------------------
             sudo -U postgres     
 ----------------------------------------
-Acesso:
+Acesso pelo cliente linux:
 ----------------------------------------
         psql -U lessa -d postgres -h 192.168.1.30 -p 5432
+----------------------------------------
+----------------------------------------
+Acesso pelo cliente do DOCKER:
+----------------------------------------
+generico:
+        sudo docker exec -it meu_postgres psql -U usuario -d postgres -h 192.168.1.30 -p 5432
+----------------------------------------
+exemplo
+lessa:
+        sudo docker exec -it postgresql psql -U lessa -d postgres -h 192.168.1.30 -p 5432
 ----------------------------------------
 
 
@@ -778,6 +810,505 @@ usuario
 ----------------------------------------
             \conninfo       
 ----------------------------------------
+
+
+
+
+CRIAR BANCO :
+///////////////////////////////////////
+----------------------------------------
+criar:
+                CREATE DATABASE aula;
+----------------------------------------
+verificar:      
+                \l
+----------------------------------------
+conectar:
+                \c aula;
+----------------------------------------
+
+
+
+CRIAR USUARIO :
+///////////////////////////////////////
+----------------------------------------
+    CREATE USER nome_usuario WITH PASSWORD 'senha_segura';
+    CREATE ROLE nome_usuario WITH PASSWORD 'senha_segura';
+----------------------------------------
+    CREATE USER postgres WITH PASSWORD 'qw';
+    CREATE ROLE postgres WITH PASSWORD 'qw';
+----------------------------------------
+verificar:      
+----------------------------------------
+                \du
+----------------------------------------
+transformar
+em superuser
+etc:
+----------------------------------------
+    ALTER USER postgres WITH SUPERUSER CREATEROLE CREATEDB REPLICATION BYPASSRLS;
+----------------------------------------
+    ALTER ROLE postgres WITH SUPERUSER CREATEROLE CREATEDB REPLICATION BYPASSRLS;
+----------------------------------------
+
+
+
+
+CRIAR 
+USUARIO DE SISTEMA UBUNTU 
+e SUPERUSUARIO POSTGRE:
+///////////////////////////////////////
+criar
+usuario
+e senha:
+--------------------------------------
+        sudo adduser lessa
+--------------------------------------
+tornando
+sudo:
+--------------------------------------
+        sudo usermod -aG sudo lessa
+--------------------------------------
+verificando:
+--------------------------------------
+        id lessa 
+--------------------------------------
+superusuario
+no postgre:
+--------------------------------------
+        sudo -u postgres createuser --superuser --createdb --login --no-replication lessa
+--------------------------------------
+banco dados
+mesmo nome:
+--------------------------------------
+        sudo -u postgres createdb --owner=lessa lessa
+--------------------------------------
+editar
+pg_hba.conf:
+--------------------------------------
+        sudo vim /etc/postgresql/*/main/pg_hba.conf
+--------------------------------------
+adicionar
+linha:
+--------------------------------------
+        local   all     lessa     peer
+--------------------------------------
+reiniciar
+postgresql:
+--------------------------------------
+        sudo systemctl restart postgresql
+--------------------------------------
+logar:
+--------------------------------------
+        sudo -iu lessa
+--------------------------------------
+entrar
+pspl:
+--------------------------------------
+        psql
+--------------------------------------
+logar
+e psql:
+--------------------------------------
+        sudo -iu lessa psql
+------------------------------------ ou 
+        psql -U lessa
+--------------------------------------
+
+
+LOGAR 
+USUARIO DE SISTEMA UBUNTU
+e SUPERUSUARIO POSTGRE:
+///////////////////////////////////////
+                sudo -iu lessa 
+----------------------------------------
+Explicacao:
+            sudo: Executa um comando como superusuário (root)
+
+            -i: Simula um login inicial (similar a sudo su -)
+
+            -u postgres: Especifica que queremos nos tornar o usuário lessa
+
+            Este comando muda para o usuário postgres em um ambiente de login
+----------------------------------------
+
+
+
+
+
+REMOVER USUARIO:
+///////////////////////////////////////
+ainda no linux
+usando um
+SUPERUSUARIO:
+----------------------------------------
+            sudo -i -u lessa 
+----------------------------------------
+REMOVER
+USUARIO
+SEM BANCO:
+----------------------------------------
+            dropuser kiki
+----------------------------------------
+REMOVER
+USUARIO
+QUE POSSUI
+UM BANCO:
+----------------------------------------
+verificando
+se tem banco:
+----------------------------------------
+            sudo -u postgres psql -c "\l"
+----------------------------------------
+ANTES,
+apague
+o banco:
+----------------------------------------
+            sudo -u postgres psql -c "DROP DATABASE kiki;"
+----------------------------------------
+agora 
+pode
+REMOVER
+USUARIO:
+----------------------------------------
+            dropuser kiki
+----------------------------------------
+
+
+
+
+
+
+///////////////////////////////////////
+///////////////////////////////////////
+            ATENCAO PANACAS: 
+///////////////////////////////////////
+///////////////////////////////////////
+        - todos os usuarios criados 
+        nos proximos comandos nao
+        conseguem logar no psql
+        ----------------------------
+        psql -U mimi            // NAO VAI FUNCIONAR
+        ----------------------------
+        - para isso precisara editar
+        o arquivo pg_hba.conf 
+///////////////////////////////////////
+ACHAR:
+        show hba_file 
+EDITAR: 
+        sudo vim /etc/postgresql/*/main/pg_hba.conf
+LINHA:
+        local   all     mimi     md5
+RESTART:
+        sudo systemctl restart postgresql 
+VERIFICAR
+SENHA:
+        sudo -u postgres psql -c "\password mimi"
+        -----------
+        (digite senha 2X)
+LOGAR:
+        psql -U mimi           // AGORA SIM
+///////////////////////////////////////
+
+
+
+CRIAR USUARIO:  mimi
+///////////////////////////////////////
+ainda no linux
+usando um
+SUPERUSUARIO:
+----------------------------------------
+            sudo -i -u postgres 
+----------------------------------------
+            createuser -dP mimi
+----------------------------------------
+    usuario (CAPACIDADES):
+    -P  : PEDE SENHA
+    -d  : CRIA BANCO de DADOS
+        : (nao cria outros usuarios - roles)
+        : (nao mostra comando alternativo)
+        : (nao é superusuario)
+----------------------------------------
+
+
+CRIAR USUARIO: popo
+///////////////////////////////////////
+            createuser -dreP popo
+----------------------------------------
+    usuario (CAPACIDADES):
+    -P  : PEDE SENHA
+    -d  : CRIA BANCO de DADOS
+    -r  : CRIA OUTROS USUARIOS (ROLES)
+    -e  : MOSTRA COMANDO ALTERNATIVO
+        : (nao é superusuario)
+----------------------------------------
+
+
+CRIAR USUARIO:  kiki
+///////////////////////////////////////
+            createuser -Ps kiki
+----------------------------------------
+    usuario (CAPACIDADES):
+    -s  : É UM SUPERUSUARIO
+        : PEDE SENHA
+        : AUTOMATICAMENTE - CRIA BANCOS 
+        : AUTOMATICAMENTE - CRIA ROLES 
+----------------------------------------
+
+
+CRIAR USUARIO:  fafa
+///////////////////////////////////////
+crie usuario
+FAZENDO PERGUNTAS
+INTERATIVAS:
+----------------------------------------
+            createuser --interactive fafa
+----------------------------------------
+    usuario (CAPACIDADES):
+    :::::::::::::::::::::::: se aceitar tudo
+    -s  : É UM SUPERUSUARIO
+        : (nao pede senha)
+        : AUTOMATICAMENTE - CRIA BANCOS 
+        : AUTOMATICAMENTE - CRIA ROLES 
+----------------------------------------
+
+
+CRIAR USUARIO:  fafa
+///////////////////////////////////////
+            createuser --interactive -P fafa
+ou ---------------------------------------- 
+            createuser -iPs fafa
+----------------------------------------
+    usuario (CAPACIDADES):
+    :::::::::::::::::::::::: se aceitar tudo
+    -s  : É UM SUPERUSUARIO
+        : PEDE SENHA
+        : AUTOMATICAMENTE - CRIA BANCOS 
+        : AUTOMATICAMENTE - CRIA ROLES 
+----------------------------------------
+----------------------------------------
+Explicacao:
+            ----------------------------
+            createuser → Utilitário do PostgreSQL para criar novos usuários/roles 
+            ----------------------------
+            --interactive (ou -i):
+                Modo interativo: 
+                o sistema fará perguntas sobre os privilégios do usuário
+                Sem esta flag, seria criado um usuário sem privilégios especiais
+            ----------------------------
+            -d → Concede ao novo usuário permissão para criar bancos de dados (equivalente ao atributo CREATEDB)
+            ----------------------------
+            -r → Permite criar outros usuários (CREATEROLE)
+            ----------------------------
+            -P → Solicita que seja definida uma senha para o novo usuário (será pedido para digitar a senha)
+            ----------------------------
+            -s → Concede ao usuário privilégios de superusuário (equivalente ao atributo SUPERUSER)
+            ----------------------------
+            -e → mostra o comando equivalente
+            ----------------------------
+
+            
+
+
+ALTERAR USUARIO:
+///////////////////////////////////////
+
+    ALTER ROLE lessa WITH SUPERUSER CREATEROLE CREATEDB REPLICATION BYPASSRLS;
+
+----------------------------------------
+
+
+CRIAR SUPERUSER (diretamente):
+////////////////////////////////////////
+
+    CREATE ROLE lessa WITH SUPERUSER CREATEROLE CREATEDB REPLICATION BYPASSRLS PASSWORD 'qw' LOGIN;
+
+----------------------------------------
+
+
+CRIAR USUARIO :
+///////////////////////////////////////
+----------------------------------------
+    CREATE USER nome_usuario WITH PASSWORD 'senha_segura';
+    CREATE ROLE nome_usuario WITH PASSWORD 'senha_segura';
+----------------------------------------
+    CREATE USER postgres WITH PASSWORD 'qw';
+    CREATE ROLE postgres WITH PASSWORD 'qw';
+----------------------------------------
+verificar:      
+----------------------------------------
+                \du
+----------------------------------------
+transformar
+em superuser
+etc:
+----------------------------------------
+    ALTER USER postgres WITH SUPERUSER CREATEROLE CREATEDB REPLICATION BYPASSRLS;
+----------------------------------------
+    ALTER ROLE postgres WITH SUPERUSER CREATEROLE CREATEDB REPLICATION BYPASSRLS;
+----------------------------------------
+
+
+
+////////////////////////////////////////
+////////////////////////////////////////
+
+         TUDO SEM ENTRAR NO PSQL
+
+////////////////////////////////////////
+////////////////////////////////////////
+
+---------------------------------------------
+USE: 
+---------------------------------------------
+
+            sudo -u postgres psql -c "comandos"
+
+---------------------------------------------
+exemplo:
+---------------------------------------------
+
+            sudo -u postgres psql -c "\l"
+            sudo -u postgres psql -c "\d"
+            sudo -u postgres psql -c "\du"
+
+---------------------------------------------
+exemplo
+completo:
+---------------------------------------------
+
+            sudo -u postgres psql -c "create database agencia_carros"
+            
+            sudo -u postgres psql -c "\c agencia_carros"
+            
+            sudo -u postgres psql -d agencia_carros -c "create table carros(carro_id serial primary key, carro_marca varchar(20) not null, carro_modelo varchar(20) not null, carro_ano integer not null);"
+
+            sudo -u postgres psql -d agencia_carros -c "insert into carros (carro_marca, carro_modelo, carro_ano) values ('Ferrari', 'SF90', 2020);"
+
+            sudo -u postgres psql -d agencia_carros -c "insert into carros (carro_marca, carro_modelo, carro_ano) values ('Ferrari', 'Daytona', 2023);"
+
+            sudo -u postgres psql -d agencia_carros -c "insert into carros (carro_marca, carro_modelo, carro_ano) values ('Lamborguini', 'Aventador SVJ', 2024);"
+
+            sudo -u postgres psql -d agencia_carros -c "insert into carros (carro_marca, carro_modelo, carro_ano) values ('Lamborguini', 'Huracan Spyder', 2025);"
+
+---------------------------------------------
+exemplo
+com comando
+UNICO
+MAIS SEGURO:
+---------------------------------------------
+
+sudo -u postgres psql <<EOF
+CREATE DATABASE "agencia_carros2";
+
+\c "agencia_carros2"
+
+CREATE TABLE carros(
+    carro_id serial primary key,
+    carro_marca varchar(20) not null,
+    carro_modelo varchar(20) not null,
+    carro_ano integer not null
+);
+
+INSERT INTO carros (carro_marca, carro_modelo, carro_ano) VALUES ('Ferrari', 'SF90', 2020);
+INSERT INTO carros (carro_marca, carro_modelo, carro_ano) VALUES ('Ferrari', 'Daytona', 2023);
+INSERT INTO carros (carro_marca, carro_modelo, carro_ano) VALUES ('Lamborghini', 'Aventador SVJ', 2024); 
+INSERT INTO carros (carro_marca, carro_modelo, carro_ano) VALUES ('Lamborghini', 'Huracan Spyder', 2025);
+EOF  
+
+---------------------------------------------
+
+
+
+
+///////////////////////////////////////
+///////////////////////////////////////
+            PG ADMIN
+///////////////////////////////////////
+///////////////////////////////////////
+
+
+ABA SUP 1 - DASHBOARD:
+Add New Server:
+///////////////////////////////////////
+aba - GENERAL
+----------------------------------------
+    Name: Conexao_Teste
+----------------------------------------
+aba - CONNECTION
+----------------------------------------
+    Host:       127.0.0.1 
+    Port:       5432
+    Maintenance
+    database:   postgres    (manutençao)
+    Username:   postgres    (superuser)
+    Password:   blablabla
+    ...
+----------------------------------------
+
+
+
+
+
+CRIAR BANCO
+///////////////////////////////////////
+PAINEL ESQUERDO
+----------------------------------------
+Servers > Conexao > Databases:
+///////////////////////////////////////
+bortao direito mouse:
+----------------------------------------
+create > Database :
+----------------------------------------
+aba - GENERAL
+----------------------------------------
+    Database:   Banco_Teste
+    Owner:      postgres
+    ...
+----------------------------------------
+aba - SQL
+----------------------------------------
+    CREATE DATABASE "Banco_Teste"
+    with
+    OWNER = postgres 
+    ENCONDING = 'UTF8'
+    CONNECTION LIMIT = -1;
+----------------------------------------
+
+
+
+
+
+SELECT
+///////////////////////////////////////
+PAINEL ESQUERDO
+----------------------------------------
+Servers > Conexao > Databases > 
+                    Banco_Teste >
+                    Schemas >
+                    public >
+                    Tables >
+                    aluno :
+///////////////////////////////////////
+bortao direito mouse:
+----------------------------------------
+Query Tool >
+----------------------------------------
+Abrira uma janela com espaço para comandos SQL:
+----------------------------------------
+    
+    
+    SELECT * FROM aluno;
+
+
+----------------------------------------
+
+
+
+
+
+
+
 
 
 
