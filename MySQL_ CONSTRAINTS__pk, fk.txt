@@ -1,0 +1,67 @@
+
+///////////////////////////////////////
+///////////////////////////////
+/////////////////    
+///////////           CONSTRAINTS 
+/////////////////    
+///////////////////////////////
+///////////////////////////////////////
+- Regras aplicadas às colunas de uma 
+tabela para limitar o tipo de dados 
+que pode ser armazenado, garantindo 
+a integridade e precisão dos dados 
+no banco de dados.
+
+
+principais:
+----------------------------------------
+                - NOT NULL
+                - UNIQUE
+                - PRIMARY KEY
+                - FOREINGN KEY
+                - CHECK
+                - DEFAULT
+
+
+1. NOT NULL 
+----------------------------------------
+                - Garante que uma 
+                coluna não pode ter 
+                valor NULL
+
+
+2. UNIQUE 
+----------------------------------------
+                 - Garante que todos os valores em uma coluna 
+                 sejam diferentes
+
+
+3. PRIMARY KEY 
+----------------------------------------
+                 - Identifica unicamente 
+                 cada registro em 
+                 uma tabela
+
+
+
+4. FOREIGN KEY
+----------------------------------------
+                  - Mantém a integridade referencial entre 
+                  tabelas
+
+
+5. CHECK
+----------------------------------------
+                   - Garante que todos 
+                   os valores em uma 
+                   coluna satisfaçam uma
+                   condição específica
+
+
+6. DEFAULT 
+----------------------------------------
+                   - Define um valor 
+                   padrão para uma coluna
+
+
+

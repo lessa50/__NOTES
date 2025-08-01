@@ -1,0 +1,354 @@
+
+
+///////////////////////////////////////
+///////////////////////////////
+/////////////////    
+///////////           ACESSO 
+/////////////////    
+///////////////////////////////
+///////////////////////////////////////
+
+
+
+CONFIGURACAO DE ACESSO:
+///////////////////////////////////////
+----------------------------------------
+ pg_hba.conf
+----------------------------------------
+----------------------------------------
+ no psql=#
+----------------------------------------
+pesquisar
+SHOW
+maiuscula:
+----------------------------------------
+            SHOW hba_file;               
+----------------------------------------
+editando
+powershell
+com aspas:
+----------------------------------------
+            notepad "C:\Program Files\PostgreSQL\14\data\pg_hba.conf"
+----------------------------------------
+METHOD (encriptacao):
+----------------------------------------
+1. SCRAM-SHA-256            5 ★★★★★    
+2. Clientcert               5 ★★★★★
+3. peer (Somente Unix)      4 ★★★★    //entra com usuario linux
+4. GSSAPI/Kerberos          4 ★★★★ 
+5. LDAP/RADIUS              3 ★★★ 
+6. md5 (Obsoleto)           2 ★★
+7. password (Texto claro)   1 ★
+8. trust (Perigosíssimo)    ZERO
+----------------------------------------
+Método	        Criptografia	Usar/Internet	Resistir/Ataques
+SCRAM-SHA-256	Forte	        Sim	         ★★★★★          
+Certificado	Muito Forte	Sim	         ★★★★★	       
+peer	        N/A	        Não	         ★★★★	         
+GSSAPI	        Forte	        Corporativo	 ★★★★	         
+LDAP	        Variável	Depende	         ★★★	             
+md5	        Fraca	        Não	         ★★	             
+password	Nenhuma	        Nunca	         ★	             
+trust	        Nenhuma	        Nunca	         Não	              
+----------------------------------------
+no docker:
+----------------------------------------
+            /var/lib/postgresql/data/pg_hba.conf
+----------------------------------------
+editando
+direto:
+----------------------------------------
+            sudo docker exec -it seu_container_postgres bash
+            cat /var/lib/postgresql/data/pg_hba.conf
+----------------------------------------
+editando
+volume:
+----------------------------------------
+            sudo vim ~/docker-volumes/postgresql/data/pg_hba.conf
+----------------------------------------
+no ubuntu:
+----------------------------------------
+            /etc/postgresql/[versão]/main/pg_hba.conf
+            /etc/postgresql/16/main/pg_hba.conf
+----------------------------------------
+encontrar
+o caminho:
+            sudo -u postgres psql -c "SHOW hba_file;"
+            sudo find /etc -name "pg_hba.conf"
+            ls /etc/postgresql/*/main/pg_hba.conf
+----------------------------------------
+            \password
+----------------------------------------
+            alter user postgres with password 'qw';  
+----------------------------------------
+            digita senha
+            repete senha
+----------------------------------------
+
+
+
+
+
+ACESSO - WINDOWS:
+///////////////////////////////////////
+----------------------------------------
+    psql -U postgres
+----------------------------------------
+    psql -U postgres -d postgres -h localhost -p 5432
+----------------------------------------
+    ::::::::::::::::::::::::::::::::::::
+    Componentes do Comando:
+    ::::::::::::::::::::::::::::::::::::
+        psql:
+        --------------------------------
+                O cliente interativo de 
+                linha de comando do 
+                PostgreSQL. Permite 
+                executar comandos 
+                SQL e administrativos 
+                diretamente no banco
+        ::::::::::::::::::::::::::::::::
+        -U postgres:
+        --------------------------------
+                -U: 
+        --------------------------------
+                Flag que especifica 
+                o usuário (User)
+        --------------------------------
+                postgres: 
+        --------------------------------
+                Nome do usuário 
+                de superadministrador 
+                padrão do PostgreSQL
+        ::::::::::::::::::::::::::::::::
+        -d postgres:
+        --------------------------------
+                -d: 
+        --------------------------------
+                Flag que especifica 
+                o banco de dados
+                (Database)
+        --------------------------------
+                postgres: 
+        --------------------------------
+                Banco de dados 
+                padrão que existe em toda 
+                instalação PostgreSQL
+        ::::::::::::::::::::::::::::::::
+        -h localhost:
+        --------------------------------
+                -h: 
+        --------------------------------
+                Flag que especifica 
+                o host (máquina onde o 
+                PostgreSQL está rodando)
+        --------------------------------
+                localhost: 
+        --------------------------------
+                Indica que o 
+                servidor está na própria 
+                máquina (127.0.0.1)
+        ::::::::::::::::::::::::::::::::
+        -p 5432:
+        --------------------------------
+                -p: 
+                Flag que especifica 
+                a porta (Port)
+        --------------------------------
+                5432: 
+                Porta padrão onde 
+                o PostgreSQL escuta 
+                conexões
+        ::::::::::::::::::::::::::::::::
+
+
+
+ACESSO - DOCKER - LINUX:
+///////////////////////////////////////
+----------------------------------------
+Instalar 
+cliente:
+----------------------------------------
+            sudo apt update
+            sudo apt install postgresql-client    
+----------------------------------------
+            sudo -i -u postgres     
+----------------------------------------
+            sudo -U postgres     
+----------------------------------------
+Acesso pelo cliente linux:
+----------------------------------------
+        psql -U lessa -d postgres -h 192.168.1.30 -p 5432
+----------------------------------------
+----------------------------------------
+Acesso pelo cliente do DOCKER:
+----------------------------------------
+generico:
+        sudo docker exec -it meu_postgres psql -U usuario -d postgres -h 192.168.1.30 -p 5432
+----------------------------------------
+exemplo
+lessa:
+        sudo docker exec -it postgresql psql -U lessa -d postgres -h 192.168.1.30 -p 5432
+----------------------------------------
+
+
+
+ACESSO - LINUX:
+///////////////////////////////////////
+----------------------------------------
+Instalar 
+cliente:
+----------------------------------------
+            sudo apt update
+            sudo apt install postgresql-client    
+----------------------------------------
+            sudo -i -u postgres     
+----------------------------------------
+            sudo -U postgres     
+----------------------------------------
+Acesso:
+----------------------------------------
+    sudo -i -u postgres     
+----------------------------------------
+    ::::::::::::::::::::::::::::::::::::
+    Componentes do Comando:
+    ::::::::::::::::::::::::::::::::::::
+        sudo:
+        --------------------------------
+                Permite executar comandos 
+                como outro usuário 
+                (normalmente root)
+                Necessário porque usuários 
+                comuns não podem alternar 
+                para o usuário postgres 
+                diretamente
+        ::::::::::::::::::::::::::::::::
+        -i (login shell):
+        --------------------------------
+                Cria um ambiente de login 
+                interativo
+                Carrega o arquivo de perfil 
+                do usuário (~/.profile, 
+                ~/.bashrc, etc.)
+                Muda para o diretório home 
+                do usuário
+        ::::::::::::::::::::::::::::::::
+        -u postgres:
+        --------------------------------
+                Especifica o usuário para 
+                o qual queremos alternar 
+                (no caso, postgres)
+                O usuário postgres é 
+                criado automaticamente 
+                durante a instalação do 
+                PostgreSQL
+        ::::::::::::::::::::::::::::::::
+
+
+
+
+ACESSO - VERIFICACAO:
+///////////////////////////////////////
+----------------------------------------
+ no psql=#
+----------------------------------------
+usuario
+detalhes:
+----------------------------------------
+            \du                 
+----------------------------------------
+usuario
++ banco
++ host
++ via
++ porta:
+----------------------------------------
+            \conninfo       
+----------------------------------------
+
+
+
+
+
+
+
+----------------------------------------
+ACESSO REMOTO:
+----------------------------------------
+TCP/IP ja vem bloqueada por padrao:
+
+----------------------------------------
+LIBERAR:
+----------------------------------------
+sudo vim /etc/postgresql/<versao>/main/postgresql.conf
+----------------------------------------
+sudo vim /etc/postgresql/16/main/postgresql.conf
+----------------------------------------
+PROCURAR:
+        /listen_addresses
+----------------------------------------
+ORIGINAL:
+        #listen_addresses = 'localhost'
+        #port = 5432
+DESCOMENTAR:
+        listen_addresses = '*'
+        port = 5432
+----------------------------------------
+SALVAR E SAIR:
+        :wq 
+----------------------------------------
+RESTARTAR POSTGRE:
+        sudo service postgresql restart 
+----------------------------------------
+ou
+----------------------------------------
+        sudo systemctl stop postgresql
+        sudo systemctl status postgresql
+
+        sudo systemctl start postgresql
+        sudo systemctl status postgresql
+----------------------------------------
+
+
+----------------------------------------
+ERRO:
+        --------------------------------
+        no pg_hba.conf entry for host "192.168.1.5", user "postgres", database "postgres", no encryption
+
+----------------------------------------
+EXPLICAÇÃO:
+        --------------------------------
+        Este erro ocorre quando há uma 
+        tentativa de conexão remota ao 
+        PostgreSQL que não está 
+        configurada corretamente no 
+        arquivo pg_hba.conf. O erro 
+        específico indica que não há 
+        uma entrada válida para o host 
+        192.168.1.5 tentando se conectar 
+        como usuário postgres ao 
+        banco postgres.
+----------------------------------------
+SOLUÇÃO:
+        --------------------------------
+        Primeiro, encontre o arquivo de 
+        configuração (o local varia 
+        conforme a instalação):
+        --------------------------------
+          sudo find / -name "pg_hba.conf" 2>/dev/null
+        --------------------------------
+EDITE COM VIM:
+--------------------------------
+  sudo vim /etc/postgresql/13/main/pg_hba.conf
+--------------------------------
+INCLUA AS LINHAS NO FINAL:
+--------------------------------
+# TYPE  DATABASE        USER            ADDRESS                 METHOD
+host    postgres        postgres        192.168.1.5/32          md5
+--------------------------------
+isso inclui o endereço da minha
+maquina windows que to tentando 
+acessar remotamente o banco 
+postgre na vm linux
+--------------------------------
+

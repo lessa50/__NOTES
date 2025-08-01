@@ -1,0 +1,118 @@
+///////////////////////////////////////
+///////////////////////////////
+/////////////////    
+///////////           CRIAR
+///////////           DELETAR
+///////////           PRIVILEGIOS
+/////////////////    
+///////////////////////////////
+///////////////////////////////////////
+
+
+
+
+CRIAR
+BANCO:
+/////////////////////////////////////// 
+                CREATE DATABASE dbTeste;
+----------------------------------------
+AUTOMATICAMENTE
+FICA ASSIM:
+----------------------------------------
+                CREATE DATABASE "dbTeste"
+                with
+                OWNER = postgres 
+                ENCONDING = 'UTF8'
+                LC_COLLATE = 'pt_BR.UTF-8'
+                LC_CTYPE = 'pt_BR.UTF-8'
+                CONNECTION LIMIT = -1;
+----------------------------------------
+verificar:      
+----------------------------------------
+                \l
+----------------------------------------
+conectar:
+----------------------------------------
+                \c dbTeste;
+----------------------------------------
+
+
+CONCEDER
+PRIVILEGIOS
+DE ACESSO:                  GRANT -> TO
+///////////////////////////////////////
+                GRANT ALL 
+                PRIVILEGES
+                ON DATABASE
+                dbTeste 
+                TO lessa;
+----------------------------------------
+
+
+
+REVOGAR
+PRIVILEGIOS              REVOKE -> FROM
+///////////////////////////////////////
+                REVOKE ALL 
+                PRIVILEGES
+                ON DATABASE
+                dbTeste 
+                FROM lessa;
+----------------------------------------
+
+
+DELETAR
+BANCO:
+///////////////////////////////////////
+                DROP DATABASE dbTeste;
+----------------------------------------
+
+
+
+
+
+FORA
+PSQL:
+///////////////////////////////////////
+Criar banco:
+----------------------------------------
+    sudo -u postgres createdb -O lessa dbTeste
+----------------------------------------
+Explicando comando:
+        ::::::::::::::::::::::::::::::::
+        createdb:
+        --------------------------------
+                Utilitário do PostgreSQL 
+                para criar novos bancos 
+                de dados
+                Alternativa ao 
+                comando SQL 
+                CREATE DATABASE
+        ::::::::::::::::::::::::::::::::
+        -O ou --owner:
+        --------------------------------
+                Define o proprietário 
+                (owner) 
+                do banco de dados
+                Neste caso, 
+                o usuário lessa será o 
+                proprietário do banco
+        ::::::::::::::::::::::::::::::::
+        dbTeste:
+        --------------------------------
+                Nome do novo banco de 
+                dados que será criado
+
+
+Deletar banco:
+----------------------------------------
+Entrar:
+        ::::::::::::::::::::::::::::::::
+            sudo -u postgres psql postgres
+Apagar banco:
+        ::::::::::::::::::::::::::::::::
+            DROP DATABASE dbTeste
+    
+----------------------------------------
+
+

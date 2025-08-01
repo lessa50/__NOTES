@@ -1,0 +1,417 @@
+
+
+
+///////////////////////////////////////
+///////////////////////////////
+/////////////////    
+///////////           USER
+/////////////////    
+///////////////////////////////
+///////////////////////////////////////
+
+
+CRIAR USUARIO :
+///////////////////////////////////////
+----------------------------------------
+    CREATE USER nome_usuario WITH PASSWORD 'senha_segura';
+    CREATE ROLE nome_usuario WITH PASSWORD 'senha_segura';
+----------------------------------------
+    CREATE USER postgres WITH PASSWORD 'qw';
+    CREATE ROLE postgres WITH PASSWORD 'qw';
+----------------------------------------
+verificar:      
+----------------------------------------
+                \du
+----------------------------------------
+transformar
+em superuser
+etc:
+----------------------------------------
+    ALTER USER postgres WITH SUPERUSER CREATEROLE CREATEDB REPLICATION BYPASSRLS;
+----------------------------------------
+    ALTER ROLE postgres WITH SUPERUSER CREATEROLE CREATEDB REPLICATION BYPASSRLS;
+----------------------------------------
+
+
+
+
+CRIAR 
+USUARIO DE SISTEMA UBUNTU 
+e SUPERUSUARIO POSTGRE:
+///////////////////////////////////////
+criar
+usuario
+e senha:
+--------------------------------------
+        sudo adduser lessa
+--------------------------------------
+tornando
+sudo:
+--------------------------------------
+        sudo usermod -aG sudo lessa
+--------------------------------------
+verificando:
+--------------------------------------
+        id lessa 
+--------------------------------------
+superusuario
+no postgre:
+--------------------------------------
+        sudo -u postgres createuser --superuser --createdb --login --no-replication lessa
+--------------------------------------
+banco dados
+mesmo nome:
+--------------------------------------
+        sudo -u postgres createdb --owner=lessa lessa
+--------------------------------------
+editar
+pg_hba.conf:
+--------------------------------------
+        sudo vim /etc/postgresql/*/main/pg_hba.conf
+--------------------------------------
+adicionar
+linha:
+--------------------------------------
+        local   all     lessa     peer
+--------------------------------------
+reiniciar
+postgresql:
+--------------------------------------
+        sudo systemctl restart postgresql
+--------------------------------------
+logar:
+--------------------------------------
+        sudo -iu lessa
+--------------------------------------
+entrar
+pspl:
+--------------------------------------
+        psql
+--------------------------------------
+logar
+e psql:
+--------------------------------------
+        sudo -iu lessa psql
+------------------------------------ ou 
+        psql -U lessa
+--------------------------------------
+
+
+LOGAR 
+USUARIO DE SISTEMA UBUNTU
+e SUPERUSUARIO POSTGRE:
+///////////////////////////////////////
+                sudo -iu lessa 
+----------------------------------------
+Explicacao:
+            sudo: Executa um comando como superusuário (root)
+
+            -i: Simula um login inicial (similar a sudo su -)
+
+            -u postgres: Especifica que queremos nos tornar o usuário lessa
+
+            Este comando muda para o usuário postgres em um ambiente de login
+----------------------------------------
+
+
+
+
+
+REMOVER USUARIO:
+///////////////////////////////////////
+ainda no linux
+usando um
+SUPERUSUARIO:
+----------------------------------------
+            sudo -i -u lessa 
+----------------------------------------
+REMOVER
+USUARIO
+SEM BANCO:
+----------------------------------------
+            dropuser kiki
+----------------------------------------
+REMOVER
+USUARIO
+QUE POSSUI
+UM BANCO:
+----------------------------------------
+verificando
+se tem banco:
+----------------------------------------
+            sudo -u postgres psql -c "\l"
+----------------------------------------
+ANTES,
+apague
+o banco:
+----------------------------------------
+            sudo -u postgres psql -c "DROP DATABASE kiki;"
+----------------------------------------
+agora 
+pode
+REMOVER
+USUARIO:
+----------------------------------------
+            dropuser kiki
+----------------------------------------
+
+
+
+
+
+
+///////////////////////////////////////
+///////////////////////////////////////
+            ATENCAO PANACAS: 
+///////////////////////////////////////
+///////////////////////////////////////
+        - todos os usuarios criados 
+        nos proximos comandos nao
+        conseguem logar no psql
+        ----------------------------
+        psql -U mimi            // NAO VAI FUNCIONAR
+        ----------------------------
+        - para isso precisara editar
+        o arquivo pg_hba.conf 
+///////////////////////////////////////
+ACHAR:
+        show hba_file 
+EDITAR: 
+        sudo vim /etc/postgresql/*/main/pg_hba.conf
+LINHA:
+        local   all     mimi     md5
+RESTART:
+        sudo systemctl restart postgresql 
+VERIFICAR
+SENHA:
+        sudo -u postgres psql -c "\password mimi"
+        -----------
+        (digite senha 2X)
+LOGAR:
+        psql -U mimi           // AGORA SIM
+///////////////////////////////////////
+
+
+
+CRIAR USUARIO:  mimi
+///////////////////////////////////////
+ainda no linux
+usando um
+SUPERUSUARIO:
+----------------------------------------
+            sudo -i -u postgres 
+----------------------------------------
+            createuser -dP mimi
+----------------------------------------
+    usuario (CAPACIDADES):
+    -P  : PEDE SENHA
+    -d  : CRIA BANCO de DADOS
+        : (nao cria outros usuarios - roles)
+        : (nao mostra comando alternativo)
+        : (nao é superusuario)
+----------------------------------------
+
+
+CRIAR USUARIO: popo
+///////////////////////////////////////
+            createuser -dreP popo
+----------------------------------------
+    usuario (CAPACIDADES):
+    -P  : PEDE SENHA
+    -d  : CRIA BANCO de DADOS
+    -r  : CRIA OUTROS USUARIOS (ROLES)
+    -e  : MOSTRA COMANDO ALTERNATIVO
+        : (nao é superusuario)
+----------------------------------------
+
+
+CRIAR USUARIO:  kiki
+///////////////////////////////////////
+            createuser -Ps kiki
+----------------------------------------
+    usuario (CAPACIDADES):
+    -s  : É UM SUPERUSUARIO
+        : PEDE SENHA
+        : AUTOMATICAMENTE - CRIA BANCOS 
+        : AUTOMATICAMENTE - CRIA ROLES 
+----------------------------------------
+
+
+CRIAR USUARIO:  fafa
+///////////////////////////////////////
+crie usuario
+FAZENDO PERGUNTAS
+INTERATIVAS:
+----------------------------------------
+            createuser --interactive fafa
+----------------------------------------
+    usuario (CAPACIDADES):
+    :::::::::::::::::::::::: se aceitar tudo
+    -s  : É UM SUPERUSUARIO
+        : (nao pede senha)
+        : AUTOMATICAMENTE - CRIA BANCOS 
+        : AUTOMATICAMENTE - CRIA ROLES 
+----------------------------------------
+
+
+CRIAR USUARIO:  fafa
+///////////////////////////////////////
+            createuser --interactive -P fafa
+ou ---------------------------------------- 
+            createuser -iPs fafa
+----------------------------------------
+    usuario (CAPACIDADES):
+    :::::::::::::::::::::::: se aceitar tudo
+    -s  : É UM SUPERUSUARIO
+        : PEDE SENHA
+        : AUTOMATICAMENTE - CRIA BANCOS 
+        : AUTOMATICAMENTE - CRIA ROLES 
+----------------------------------------
+----------------------------------------
+Explicacao:
+            ----------------------------
+            createuser → Utilitário do PostgreSQL para criar novos usuários/roles 
+            ----------------------------
+            --interactive (ou -i):
+                Modo interativo: 
+                o sistema fará perguntas sobre os privilégios do usuário
+                Sem esta flag, seria criado um usuário sem privilégios especiais
+            ----------------------------
+            -d → Concede ao novo usuário permissão para criar bancos de dados (equivalente ao atributo CREATEDB)
+            ----------------------------
+            -r → Permite criar outros usuários (CREATEROLE)
+            ----------------------------
+            -P → Solicita que seja definida uma senha para o novo usuário (será pedido para digitar a senha)
+            ----------------------------
+            -s → Concede ao usuário privilégios de superusuário (equivalente ao atributo SUPERUSER)
+            ----------------------------
+            -e → mostra o comando equivalente
+            ----------------------------
+
+            
+
+
+ALTERAR USUARIO:
+///////////////////////////////////////
+
+    ALTER ROLE lessa WITH SUPERUSER CREATEROLE CREATEDB REPLICATION BYPASSRLS;
+
+----------------------------------------
+
+
+CRIAR SUPERUSER (diretamente):
+////////////////////////////////////////
+
+    CREATE ROLE lessa WITH SUPERUSER CREATEROLE CREATEDB REPLICATION BYPASSRLS PASSWORD 'qw' LOGIN;
+
+----------------------------------------
+
+
+CRIAR USUARIO :
+///////////////////////////////////////
+----------------------------------------
+    CREATE USER nome_usuario WITH PASSWORD 'senha_segura';
+    CREATE ROLE nome_usuario WITH PASSWORD 'senha_segura';
+----------------------------------------
+    CREATE USER postgres WITH PASSWORD 'qw';
+    CREATE ROLE postgres WITH PASSWORD 'qw';
+----------------------------------------
+verificar:      
+----------------------------------------
+                \du
+----------------------------------------
+transformar
+em superuser
+etc:
+----------------------------------------
+    ALTER USER postgres WITH SUPERUSER CREATEROLE CREATEDB REPLICATION BYPASSRLS;
+----------------------------------------
+    ALTER ROLE postgres WITH SUPERUSER CREATEROLE CREATEDB REPLICATION BYPASSRLS;
+----------------------------------------
+
+
+
+
+----------------------------------------
+USUARIO:
+----------------------------------------
+    sudo -u postgres createuser -DAP lessa
+----------------------------------------
+Flags/opções:
+        ::::::::::::::::::::::::::::::::
+        -D ou --no-createdb:
+        --------------------------------
+                O usuário NÃO terá 
+                permissão para criar 
+                bancos de dados
+        ::::::::::::::::::::::::::::::::
+
+        ::::::::::::::::::::::::::::::::
+        -A ou --no-superuser:
+        --------------------------------
+                O usuário NÃO será 
+                um superusuário
+        Erro:
+                O erro ocorre porque em 
+                versões mais recentes do 
+                PostgreSQL (10+), algumas 
+                flags foram alteradas:
+
+                A opção -A foi removida
+                Em seu lugar, deve-se 
+                usar -S para especificar 
+                que o usuário não é 
+                superusuário
+        ::::::::::::::::::::::::::::::::
+
+        ::::::::::::::::::::::::::::::::
+        -P ou --pwprompt:
+        --------------------------------
+                Solicitará a senha do 
+                novo usuário 
+                interativamente
+::::::::::::::::::::::::::::::::
+Deletar usuario:
+----------------------------------------
+Entrar:
+        ::::::::::::::::::::::::::::::::
+            sudo -u postgres psql postgres
+Apagar usuario:
+        ::::::::::::::::::::::::::::::::
+            DROP USER lessa
+        ::::::::::::::::::::::::::::::::
+Apagar usuario MODERNO:
+        ::::::::::::::::::::::::::::::::
+            DROP ROLE lessa
+    ou
+            DROP USER IF EXISTS lessa
+    melhor:
+            DROP ROLE IF EXISTS lessa
+        ::::::::::::::::::::::::::::::::
+
+Deletar usuário  POSTGRESQL MODERNO:
+----------------------------------------
+1. Conectar ao PostgreSQL como administrador:
+----------------------------------------
+        sudo -u postgres psql postgres
+----------------------------------------
+
+----------------------------------------
+2. Verificar se o usuário existe (opcional):
+----------------------------------------
+        SELECT rolname FROM pg_roles WHERE rolname = 'lessa';
+----------------------------------------
+
+----------------------------------------
+3. Remover o usuário:
+----------------------------------------
+        DROP ROLE IF EXISTS lessa;
+----------------------------------------
+
+----------------------------------------
+4. Confirmar a remoção (opcional):
+----------------------------------------
+        SELECT rolname FROM pg_roles WHERE rolname = 'lessa';
+----------------------------------------
+
+

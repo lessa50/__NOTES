@@ -1,0 +1,15 @@
+
+    CONFIGURACOES DO JSON DO EMMET
+    -------------------------------------------------------
+    ctrl + ,
+    vai no json, adiciona um virgula e depois
+    -------------------------------------------------------
+    // Força quebras de linha após elementos inline 
+    -------------------------------------------------------
+
+
+            "emmet.syntaxProfiles": {
+                "html": {
+                    "inline_break": 1  
+                }
+            }     

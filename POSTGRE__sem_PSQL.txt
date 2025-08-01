@@ -1,0 +1,72 @@
+
+
+///////////////////////////////////////
+///////////////////////////////
+/////////////////    
+///////////           SEM PSQL 
+/////////////////    
+///////////////////////////////
+///////////////////////////////////////
+
+
+---------------------------------------------
+USE: 
+---------------------------------------------
+
+            sudo -u postgres psql -c "comandos"
+
+---------------------------------------------
+exemplo:
+---------------------------------------------
+
+            sudo -u postgres psql -c "\l"
+            sudo -u postgres psql -c "\d"
+            sudo -u postgres psql -c "\du"
+
+---------------------------------------------
+exemplo
+completo:
+---------------------------------------------
+
+            sudo -u postgres psql -c "create database agencia_carros"
+            
+            sudo -u postgres psql -c "\c agencia_carros"
+            
+            sudo -u postgres psql -d agencia_carros -c "create table carros(carro_id serial primary key, carro_marca varchar(20) not null, carro_modelo varchar(20) not null, carro_ano integer not null);"
+
+            sudo -u postgres psql -d agencia_carros -c "insert into carros (carro_marca, carro_modelo, carro_ano) values ('Ferrari', 'SF90', 2020);"
+
+            sudo -u postgres psql -d agencia_carros -c "insert into carros (carro_marca, carro_modelo, carro_ano) values ('Ferrari', 'Daytona', 2023);"
+
+            sudo -u postgres psql -d agencia_carros -c "insert into carros (carro_marca, carro_modelo, carro_ano) values ('Lamborguini', 'Aventador SVJ', 2024);"
+
+            sudo -u postgres psql -d agencia_carros -c "insert into carros (carro_marca, carro_modelo, carro_ano) values ('Lamborguini', 'Huracan Spyder', 2025);"
+
+---------------------------------------------
+exemplo
+com comando
+UNICO
+MAIS SEGURO:
+---------------------------------------------
+
+sudo -u postgres psql <<EOF
+CREATE DATABASE "agencia_carros2";
+
+\c "agencia_carros2"
+
+CREATE TABLE carros(
+    carro_id serial primary key,
+    carro_marca varchar(20) not null,
+    carro_modelo varchar(20) not null,
+    carro_ano integer not null
+);
+
+INSERT INTO carros (carro_marca, carro_modelo, carro_ano) VALUES ('Ferrari', 'SF90', 2020);
+INSERT INTO carros (carro_marca, carro_modelo, carro_ano) VALUES ('Ferrari', 'Daytona', 2023);
+INSERT INTO carros (carro_marca, carro_modelo, carro_ano) VALUES ('Lamborghini', 'Aventador SVJ', 2024); 
+INSERT INTO carros (carro_marca, carro_modelo, carro_ano) VALUES ('Lamborghini', 'Huracan Spyder', 2025);
+EOF  
+
+---------------------------------------------
+
+

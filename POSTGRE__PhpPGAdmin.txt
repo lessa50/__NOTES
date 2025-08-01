@@ -1,0 +1,89 @@
+///////////////////////////////////////
+///////////////////////////////
+/////////////////    
+///////////           PHP_PG_ADMIN 
+/////////////////    
+///////////////////////////////
+///////////////////////////////////////
+--------------------------------
+PHP PG ADMIN:
+--------------------------------
+Instalar:
+        ::::::::::::::::::::::::
+        sudo apt install phppgadmin
+        ::::::::::::::::::::::::
+--------------------------------
+pesquisar
+phppgadmin.conf
+        ::::::::::::::::::::::::
+        dpkg -l | grep phppgadmin
+        ------------------------
+        dpkg -L phppgadmin
+        ::::::::::::::::::::::::
+        sudo find / -iname "*phppgadmin*" 2>/dev/null
+        ------------------------
+        sudo find /etc /usr /var -iname "*phppgadmin*" 2>/dev/null
+        ::::::::::::::::::::::::
+--------------------------------
+editar:
+        ::::::::::::::::::::::::
+        sudo vim /etc/apache2/conf-available/phppgadmin.conf 
+        ::::::::::::::::::::::::
+        adicione a linha:
+        ------------------------
+                allow from all
+        ::::::::::::::::::::::::
+
+
+--------------------------------
+APACHE2
+--------------------------------
+editar:
+        ::::::::::::::::::::::::
+        sudo vim /etc/apache2/apache2.conf
+        ::::::::::::::::::::::::
+        incluir a linha
+        ------------------------
+        Include /etc/apache2/conf-available/phppgadmin.conf 
+        ::::::::::::::::::::::::
+Reiniciar:
+        ::::::::::::::::::::::::
+        sudo systemctl restart apache2 
+        sudo systemctl status apache2 
+        ::::::::::::::::::::::::
+
+
+
+----------------------------------------
+PHPPGADMIN:
+----------------------------------------
+    Instalar no Ubuntu:
+        ::::::::::::::::::::::::::::::::
+        sudo apt update
+        sudo apt install phppgadmin
+        ::::::::::::::::::::::::::::::::
+----------------------------------------
+APACHE:
+----------------------------------------
+PHPPGADMIN:
+----------------------------------------
+    Instalar no Ubuntu:
+        ::::::::::::::::::::::::::::::::
+        sudo apt install apache2 php libapache2-mod-php
+        sudo systemctl status apache2
+        ::::::::::::::::::::::::::::::::
+    Configurar :
+        ::::::::::::::::::::::::::::::::
+        sudo vim /etc/apache2/conf.d/phppgadmin
+    ou
+        sudo vim /etc/phppgadmin/config.inc.php
+        ::::::::::::::::::::::::::::::::
+        // Habilitar login para todos usuários
+        $conf['extra_login_security'] = false;
+        ::::::::::::::::::::::::::::::::
+        // Servidores PostgreSQL 
+        //(configuração padrão geralmente funciona)
+        $conf['servers'][0]['host'] = 'localhost';
+        $conf['servers'][0]['port'] = 5432;
+        $conf['servers'][0]['sslmode'] = 'prefer';
+        ::::::::::::::::::::::::::::::::

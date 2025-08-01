@@ -1,0 +1,30 @@
+
+
+///////////////////////////////////////
+///////////////////////////////
+/////////////////    
+///////////           CRIAR BANCO 
+/////////////////    
+///////////////////////////////
+///////////////////////////////////////
+- Banco de dados sao um conjunto 
+organizado de dados armazenados e 
+acessados eletronicamente
+
+
+
+
+criar banco :
+----------------------------------------
+                CREATE DATABASE 
+                IF NOT EXISTS 
+                banco1;
+
+
+
+apagar banco :
+----------------------------------------
+                DROP DATABASE 
+                banco1;
+
+
