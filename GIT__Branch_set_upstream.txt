@@ -1,17 +1,46 @@
+///////////////////////////////////////
+///////////////////////////////
+/////////////////    
+///////////            GIT - branch
+/////////////////    
+///////////////////////////////
+///////////////////////////////////////
 
 
-NOVA BRANCH
-///////////
+CRIAR
+---------------------------------------
+        git checkout -b lessa 
 
-criando nova branch localmente
+
+
+
+CRIAR
+REMOTO
 -------------------------------------------
-    git checkout -b lessa 
+        git push --set-upstream origin lessa
 
 
 
-PUSH 
-/////
 
-subindo essa branch para o github
+DELETE
 -------------------------------------------
-    git push --set-upstream origin lessa
+        git branch -d lessa
+
+
+
+
+
+DELETE
+À FORÇA
+-------------------------------------------
+        git branch -D lessa
+
+
+
+
+
+DELETE
+REMOTO
+-------------------------------------------
+        git push origin -delete lessa
+        
