@@ -20,6 +20,11 @@ PY
 
 
 
+
+
+
+
+
 PIP
 ///////////////////////////////////////
             sudo apt update
@@ -27,211 +32,86 @@ PIP
             sudo apt install 
             python3-pip
 ---------------------------------------
-            pip --version
+            pip3 --version
+ou
+            python3 -m pip --version
 ---------------------------------------
 
 
-
-
-
-
-VIRTUALENV - WINDOW 
+VIRTUALENV
 ///////////////////////////////////////
-CRIAR 
-ENV:
+            sudo apt update
 ---------------------------------------
-        python -m virtualenv lessa-virt
+            sudo apt install 
+            python3-virtualenv
 ---------------------------------------
-ATIVAR
-p/ CMD:
----------------------------------------
-    .\lessa-virt\Scripts\activate.bat
----------------------------------------
-ATIVAR p/
-POWERSHELL:
----------------------------------------
-    .\lessa-virt\Scripts\Activate.ps1
+            virtualenv --version 
+ou
+            python3 -m virtualenv 
+            --version
 ---------------------------------------
 
 
 
-
-
-
-
-
-VIRTUALENV - UBUNTU
+CRIAR e ATIVAR ENV
 ///////////////////////////////////////
-
-            pip install virtualenv
-
+criar:
+            virtualenv env
 ---------------------------------------
-CRIAR 
-ENV:
----------
-    virtualenv lessa-virt
----------
-ATIVAR:
----------
-    source lessa-virt/Scripts/activate
+ativar: 
+            source env/bin/activate
 ---------------------------------------
-SE DER ERRO 
-DE PERMISSAO:
----------------------------------------
-            python3 -m 
-            pip install --user 
-            virtualenv
----------------------------------------
-CRIAR 
-ENV:
----------
-    virtualenv lessa-virt
----------
-ATIVAR:
----------
-    source lessa-virt/Scripts/activate
----------------------------------------
-SE DER ERRO
-EXTERNALLY...
----------------------------------------
-explicacao:
----------------------------------------
-            Esse erro ocorre porque 
-            você está usando uma versão 
-            recente do Python no Ubuntu 
-            (ou Debian-based Linux), 
-            que agora bloqueia a 
-            instalação global de 
-            pacotes via pip para 
-            evitar conflitos com os 
-            pacotes gerenciados pelo
-             sistema (apt).
----------------------------------------
-solucao:
----------------------------------------
-Use venv (módulo nativo do Python)
-O método mais simples e recomendado 
-é criar um ambiente virtual 
-e instalar pacotes nele:
----------------------------------------
-
-
-
-
-
-
-VENV - UBUNTU
-///////////////////////////////////////
-            python3 -m venv lessa-venv 
-            source lessa-venv/bin/activate
----------------------------------------
-explicacao
-do que você
-instalou:
----------------------------------------
-
-        :::::::::::::::::::::::::::
-        python3 -m venv lessa-venv  
-        ---------------------------
-            # Cria um ambiente 
-            virtual chamado 
-            'lessa-venv'
-        :::::::::::::::::::::::::::
-        source lessa-venv/bin/activate  
-        ---------------------------
-            # Ativa o ambiente
-            # Agora o pip instalará
-            pacotes apenas no 
-            ambiente virtual
-            COMO O DJANGO
----------------------------------------
-
-
-
-
-
-///////////////////////////////////////
-///////////////////////////////////////
-                ATENCAO
-///////////////////////////////////////
-///////////////////////////////////////
----------------------------------------
-veja que para ATIVAR a env 
-no VENV nativo do Python usa:
----------------------------------------
-    source lessa-venv/bin/activate
----------------------------------------
-e no VIRTUALENV vc usa:
----------------------------------------
-    source lessa-virt/Scripts/activate
----------------------------------------
-
-
-
-
-
-DJANGO
-///////////////////////////////////////
-            pip install django 
----------------------------------------
-versao:
----------------------------------------
-            django-admin --version 
----------------------------------------
-hello-world:
----------------------------------------
-            django-admin startproject
-            helloworld
----------------------------------------
-entrar
-pasta:
----------------------------------------
-            cd helloworld 
----------------------------------------
-rodar
-no windows:
----------------------------------------
-            python manage.py runserver
----------------------------------------
----------------------------------------
-rodar
-no linux 
-virtualbox:
----------------------------------------
-/////////// para acesso externo:
----------------------------------------
-                python manage.py 
-                runserver
-                0.0.0.0:8000
-        -------------------------------
-        editar 
-        settings:
-        -------------------------------
-                sudo vim /helloworld
-                /settings.py 
-        -------------------------------
-        edite 
-        a linha:
-        -------------------------------
-                ALLOWED_HOSTS = [ ] 
-        -------------------------------
-        vai 
-        ficar:
-        -------------------------------
-                ALLOWED_HOSTS = 
-                ['192.168.1.30', 
-                'localhost', 
-                '127.0.0.1']
----------------------------------------
-parar:
----------------------------------------
-            ctrl + c
----------------------------------------
-desativar
-ambiente
-virtual:
----------------------------------------
+desativar:
             deactivate
 ---------------------------------------
 
 
+
+DJANGO DENTRO DA VIRUTALENV
+///////////////////////////////////////
+ativar: 
+            source env/bin/activate
+---------------------------------------
+instalar:
+            pip install django
+---------------------------------------
+verificar
+dentro env:
+            django-admin --version 
+ou
+            python3 -m django --version
+---------------------------------------
+verificar
+fora env:
+            deactivate
+            ---------------------------
+            django-admin --version 
+ou
+            python3 -m django --version
+---------------------------------------
+
+
+
+
+
+
+START PROJET
+///////////////////////////////////////
+ativar: 
+            django-admin startproject 
+            projeto1   
+---------------------------------------
+editar:
+            vim settings.py
+incluir:
+            ALLOWED_HOSTS = ['*']
+ou:
+            ALLOWED_HOSTS = ['0.0.0.0']
+ou ip
+especifico:
+            ALLOWED_HOSTS = ['192.168.1.37']
+---------------------------------------
+rodar:
+            python3 projeto1/manage.py 
+            runserver 0.0.0.0:8000
+---------------------------------------
