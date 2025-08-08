@@ -1,0 +1,62 @@
+///////////////////////////////////////
+///////////////////////////////
+/////////////////    
+///////////            DJANGO
+///////////            STARTPROJECT
+/////////////////    
+///////////////////////////////
+///////////////////////////////////////
+
+
+STARTPROJET
+///////////////////////////////////////
+install: 
+            django-admin startproject 
+            projeto1   
+---------------------------------------
+editar:
+            vim settings.py
+incluir:
+            ALLOWED_HOSTS = ['*']
+ou:
+            ALLOWED_HOSTS = ['0.0.0.0']
+ou ip
+especifico:
+            ALLOWED_HOSTS = ['192.168.1.37']
+---------------------------------------
+rodar:
+            python3 projeto1/manage.py 
+            runserver 0.0.0.0:8000
+---------------------------------------
+
+
+
+
+
+
+LEMBRANDO AS INSTALACOES
+///////////////////////////////////////
+PY
+            sudo apt update
+            sudo apt install python3
+            python3 --version
+---------------------------------------
+PIP
+            sudo apt install 
+            python3-pip
+            python3 -m pip --version
+---------------------------------------
+VIRTUALENV
+            sudo apt install 
+            python3-virtualenv
+            python3 -m virtualenv 
+            --version
+CRIAR:
+            virtualenv env
+ATIVAR: 
+            source env/bin/activate
+---------------------------------------
+DJANGO
+            pip install django
+            python3 -m django --version
+---------------------------------------

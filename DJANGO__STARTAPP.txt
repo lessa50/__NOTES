@@ -1,0 +1,123 @@
+///////////////////////////////////////
+///////////////////////////////
+/////////////////    
+///////////            DJANGO
+///////////            STARTAPP
+/////////////////    
+///////////////////////////////
+///////////////////////////////////////
+
+
+STARTAPP
+///////////////////////////////////////
+dentro da pasta que tem manage.py
+---------------------------------------
+install: 
+            django-admin startapp tasks
+            django-admin startapp about
+            django-admin startapp users
+---------------------------------------
+editar
+settings.py:
+                INSTALLED_APPS = [
+                    'tasks',
+                    'about',
+                    'users',
+                ]
+---------------------------------------
+aproveita
+do
+projeto/
+urls.py
+
+    from django.contrib import admin
+    from django.urls import path
+
+    urlpatterns = [
+        path('admin/', admin.site.urls),
+    ]
+---------------------------------------
+CRIAR E
+EDITAR
+no
+tasks/
+urls.py:
+(SEM
+ADMIN)
+(import
+VIEWS)
+
+    from . import views
+    from django.urls import path
+
+    urlpatterns = [
+        path('helloworld/', views.helloworld),
+    ]
+---------------------------------------
+editar 
+tasks/
+views.py
+
+    from django.shortcuts import render 
+    from django.http import HttpResponse
+
+    def helloworld(request):
+        return HttpResponse('Hello World')
+---------------------------------------
+editar 
+projeto/
+urls.py
+
+    from django.contrib import admin
+    from django.urls import path, include
+
+    urlpatterns = [
+        path('admin/', admin.site.urls),
+        path('', include('tasks.urls'))
+    ]
+---------------------------------------
+RODANDO
+HELLOWORLD:
+
+            python3 projeto/manage.py 
+            runserver 0.0.0.0:8000/
+            helloworld
+---------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+LEMBRANDO AS INSTALACOES
+///////////////////////////////////////
+PY
+            sudo apt update
+            sudo apt install python3
+            python3 --version
+---------------------------------------
+PIP
+            sudo apt install 
+            python3-pip
+            python3 -m pip --version
+---------------------------------------
+VIRTUALENV
+            sudo apt install 
+            python3-virtualenv
+            python3 -m virtualenv 
+            --version
+CRIAR:
+            virtualenv env
+ATIVAR: 
+            source env/bin/activate
+---------------------------------------
+DJANGO
+            pip install django
+            python3 -m django --version
+---------------------------------------
